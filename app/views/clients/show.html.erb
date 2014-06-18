@@ -20,6 +20,11 @@
 </p>
 
 <p>
+  <b>Code postal:</b>
+  <%= @client.zipCode %>
+</p>
+
+<p>
   <b>Courriel:</b>
   <%= @client.emailAddress %>
 </p>
@@ -29,6 +34,10 @@
   <%= @client.password %>
 </p>
 
+<p>
+  <b>Type client:</b>
+  <%= @client.clientType %>
+</p>
 
 <%= link_to 'Modifier', edit_client_path(@client) %> |
 <%= link_to 'Retour', clients_path %>

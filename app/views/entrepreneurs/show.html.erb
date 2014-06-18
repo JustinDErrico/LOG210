@@ -1,5 +1,44 @@
 <p id="notice"><%= notice %></p>
 
+<p>
+  <b>Nom:</b>
+  <%= @entrepreneur.name %>
+</p>
+
+<p>
+  <b>Date naissance:</b>
+  <%= @entrepreneur.dateOfBirth %>
+</p>
+
+<p>
+  <b>Numéro de téléphone:</b>
+  <%= @entrepreneur.phoneNumber %>
+</p>
+
+<p>
+  <b>Addresse:</b>
+  <%= @entrepreneur.address %>
+</p>
+
+<p>
+  <b>Code postal:</b>
+  <%= @entrepreneur.zipCode %>
+</p>
+
+<p>
+  <b>Courriel:</b>
+  <%= @entrepreneur.emailAddress %>
+</p>
+
+<p>
+  <b>Mot de passe:</b>
+  <%= @entrepreneur.password %>
+</p>
+
+<p>
+  <b>Type client:</b>
+  <%= @entrepreneur.clientType %>
+</p>
 
 <%= link_to 'Modifier', edit_entrepreneur_path(@entrepreneur) %> |
 <%= link_to 'Retour', entrepreneurs_path %>

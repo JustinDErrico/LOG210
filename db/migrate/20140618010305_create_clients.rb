@@ -9,7 +9,8 @@ class CreateClients < ActiveRecord::Migration
       t.string :password
       t.string :phoneNumber
       t.string :clientType
-
+      t.string :zipCode
+      
       t.timestamps
     end
   end

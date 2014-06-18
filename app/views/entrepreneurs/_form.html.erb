@@ -28,6 +28,10 @@
       <%= f.text_field :address, :class=>'form-control', :placeholder=>'Entrez l\'adresse' %>
     </div>
     <div class="form-group">
+      <%= f.label :zipCode, 'Code postal' %><br />
+      <%= f.text_field :zipCode, :class=>'form-control', :placeholder=>'Entrez le code postal' %>
+    </div>
+    <div class="form-group">
       <%= f.label :emailAddress, 'Courriel' %><br />
       <%= f.text_field :emailAddress, :class=>'form-control', :placeholder=>'Entrez le courriel' %>
     </div>

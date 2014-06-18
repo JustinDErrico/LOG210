@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(:version => 20140618010305) do
     t.string   "password"
     t.string   "phoneNumber"
     t.string   "clientType"
+    t.string   "zipCode"
+    
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end

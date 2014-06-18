@@ -4,7 +4,7 @@ class Client < ActiveRecord::Base
 
   CLIENT_TYPES = {visitor: 'visitor', administrator: 'administrator', entrepreneur: 'entrepreneur', restaurator: 'restaurator', deliverer: 'deliverer'}
 
-  attr_accessible :address, :dateOfBirth, :emailAddress, :name, :password, :phoneNumber, :password_confirmation, :clientType
+  attr_accessible :address, :dateOfBirth, :emailAddress, :name, :password, :phoneNumber, :password_confirmation, :clientType, :zipCode
   attr_accessor :password_confirmation
 
   def setAsAdmin
