@@ -17,7 +17,7 @@
     <% if (restaurant.restaurator_id != nil) %>
         <td><%= Restaurator.find(restaurant.restaurator_id).name %></td>
     <%else %>
-        <td>fail</td>
+        <td></td>
     <%end %>
 
     <td><%= link_to 'Détails', restaurant %></td>

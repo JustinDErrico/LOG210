@@ -45,6 +45,12 @@ class RestauratorsController < ApplicationController
 
     respond_to do |format|
       if @restaurator.save
+
+        if (@restaurator.linkedRestaurant != '')
+          @restaurant = Restaurant.find(@restaurator.linkedRestaurant)
+          @restaurant.restaurator_id = @restaurator.id
+          @restaurant.save
+        end
         format.html { redirect_to @restaurator, notice: 'Restaurator was successfully created.' }
         format.json { render json: @restaurator, status: :created, location: @restaurator }
       else
