@@ -1,0 +1,34 @@
+
+<p>
+  <b>Nom:</b>
+  <%= @client.name %>
+</p>
+
+<p>
+  <b>Date naissance:</b>
+  <%= @client.dateOfBirth %>
+</p>
+
+<p>
+  <b>Numéro de téléphone:</b>
+  <%= @client.phoneNumber %>
+</p>
+
+<p>
+  <b>Addresse:</b>
+  <%= @client.address %>
+</p>
+
+<p>
+  <b>Courriel:</b>
+  <%= @client.emailAddress %>
+</p>
+
+<p>
+  <b>Mot de passe:</b>
+  <%= @client.password %>
+</p>
+
+
+<%= link_to 'Modifier', edit_client_path(@client) %> |
+<%= link_to 'Retour', clients_path %>

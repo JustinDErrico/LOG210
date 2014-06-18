@@ -1,0 +1,40 @@
+<h1>Entrepreneurs</h1>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Nom</th>
+    <th>Date naissance</th>
+    <th>Téléphone</th>
+    <th>Adresse</th>
+    <th>Courriel</th>
+    <th>Mot de passe</th>
+    <th>Type de client</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @entrepreneurs.each do |entrepreneur|
+    if (entrepreneur.clientType == 'entrepreneur') %>
+      <tr>
+        <td><%= entrepreneur.name %></td>
+        <td><%= entrepreneur.dateOfBirth %></td>
+        <td><%= entrepreneur.phoneNumber %></td>
+        <td><%= entrepreneur.address %></td>
+        <td><%= entrepreneur.emailAddress %></td>
+        <td><%= entrepreneur.password %></td>
+        <td><%= entrepreneur.clientType %></td>
+        <td><%= link_to 'Détails', entrepreneur %></td>
+        <td><%= link_to 'Modifier', edit_entrepreneur_path(entrepreneur) %></td>
+        <td><%= link_to 'Supprimer', entrepreneur, method: :delete, data: { confirm: 'Êtes-vous certain?' } %></td>
+      </tr>
+    <% end
+  end %>
+  </tbody>
+</table>
+
+<br />
+
+<%= link_to 'Nouvel entrepreneur', new_entrepreneur_path %>

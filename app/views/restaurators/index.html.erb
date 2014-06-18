@@ -1,0 +1,40 @@
+<h1>Restaurateurs</h1>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Nom</th>
+    <th>Date naissance</th>
+    <th>Téléphone</th>
+    <th>Adresse</th>
+    <th>Courriel</th>
+    <th>Mot de passe</th>
+    <th>Type de client</th>
+    <th></th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @restaurators.each do |restaurator|
+    if (restaurator.clientType == 'restaurator') %>
+          <tr>
+            <td><%= restaurator.name %></td>
+            <td><%= restaurator.dateOfBirth %></td>
+            <td><%= restaurator.phoneNumber %></td>
+            <td><%= restaurator.address %></td>
+            <td><%= restaurator.emailAddress %></td>
+            <td><%= restaurator.password %></td>
+            <td><%= restaurator.clientType %></td>
+            <td><%= link_to 'Détails', restaurator %></td>
+            <td><%= link_to 'Modifier', edit_restaurator_path(restaurator) %></td>
+            <td><%= link_to 'Supprimer', restaurator, method: :delete, data: { confirm: 'Êtes-vous certain?' } %></td>
+          </tr>
+      <% end
+         end %>
+  </tbody>
+</table>
+
+<br />
+
+<%= link_to 'Nouveau restaurateur', new_restaurator_path %>
+

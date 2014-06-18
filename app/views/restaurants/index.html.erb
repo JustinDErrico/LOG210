@@ -1,0 +1,32 @@
+<h1>Restaurants</h1>
+
+<table class="table table-striped">
+  <tr>
+    <th>Nom</th>
+    <th>Adresse</th>
+    <th>Restaurateur assigné</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @restaurants.each do |restaurant| %>
+  <tr>
+    <td><%= restaurant.name %></td>
+    <td><%= restaurant.address %></td>
+    <% if (restaurant.restaurator_id != nil) %>
+        <td><%= Restaurator.find(restaurant.restaurator_id).name %></td>
+    <%else %>
+        <td>fail</td>
+    <%end %>
+
+    <td><%= link_to 'Détails', restaurant %></td>
+    <td><%= link_to 'Modifier', edit_restaurant_path(restaurant) %></td>
+    <td><%= link_to 'Supprimer', restaurant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Nouveau restaurant', new_restaurant_path %>

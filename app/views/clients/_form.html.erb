@@ -1,0 +1,45 @@
+<%= form_for(@client) do |f| %>
+  <% if @client.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@client.errors.count, "error") %> prohibited this client from being saved:</h2>
+
+      <ul>
+      <% @client.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name, 'Nom'%><br />
+    <%= f.text_field :name, :class=>'form-control', :placeholder=>'Entrez le nom' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :dateOfBirth, 'Date naissance'%><br />
+    <%= f.date_select :dateOfBirth %>
+  </div>
+  <div class="form-group">
+    <%= f.label :phoneNumber, 'Numéro de téléphone' %><br />
+    <%= f.text_field :phoneNumber, :class=>'form-control', :placeholder=>'Entrez le numéro de téléphone' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :address, 'Adresse' %><br />
+    <%= f.text_field :address, :class=>'form-control', :placeholder=>'Entrez l\'adresse' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :emailAddress, 'Courriel' %><br />
+    <%= f.text_field :emailAddress, :class=>'form-control', :placeholder=>'Entrez le courriel' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :password, 'Mot de passe' %><br />
+    <%= f.password_field :password, :class=>'form-control', :placeholder=>'Entrez le mot de passe' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :password_confirmation, 'Confirmation mot de passe' %><br />
+    <%= f.password_field :password_confirmation, :class=>'form-control', :placeholder=>'Confirmez le mot de passe' %>
+  </div>
+  <div class="form-group">
+    <%= f.submit 'Soumettre', :class=>'btn btn-primary' %>
+  </div>
+<% end %>
