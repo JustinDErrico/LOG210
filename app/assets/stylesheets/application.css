@@ -15,6 +15,10 @@
  
 body {
 	padding-top: 70px;
+
+}
+.container{
+    background: white;
 }
 .user_nav{
     height:50px;
@@ -27,4 +31,7 @@ body {
     background:none;
     color:black;
     text-decoration: underline !important;
+}
+.imgLogo{
+    padding-top: 20px;
 }
