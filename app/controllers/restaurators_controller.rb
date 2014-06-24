@@ -43,19 +43,34 @@ class RestauratorsController < ApplicationController
     @restaurator = Restaurator.new(params[:restaurator])
     @restaurator.setAsRestaurator
 
-    respond_to do |format|
-      if @restaurator.save
+    #valide si l'adresse email donnée existe déjà dans la BD
+    if(Restaurator.find_all_by_emailAddress(@restaurator.emailAddress).empty?)
 
-        if (@restaurator.linkedRestaurant != '')
-          @restaurant = Restaurant.find(@restaurator.linkedRestaurant)
-          @restaurant.restaurator_id = @restaurator.id
-          @restaurant.save
+      #valide si le password équivaut à la confirmation du password
+      if @restaurator.password.to_s() == @restaurator.password_confirmation.to_s()
+
+        #hashage du password
+        @restaurator.password = @restaurator.encrypt_password
+
+        respond_to do |format|
+          if @restaurator.save
+            format.html { redirect_to @restaurator, notice: 'Restaurator was successfully created.' }
+            format.json { render json: @restaurator, status: :created, location: @restaurator }
+          else
+            format.html { render action: "new" }
+            format.json { render json: @restaurator.errors, status: :unprocessable_entity }
+          end
         end
-        format.html { redirect_to @restaurator, notice: 'Restaurator was successfully created.' }
-        format.json { render json: @restaurator, status: :created, location: @restaurator }
       else
-        format.html { render action: "new" }
-        format.json { render json: @restaurator.errors, status: :unprocessable_entity }
+        respond_to do |format|
+          format.html { redirect_to new_restaurator_url, notice: 'Password Mismatch.' }
+          format.json { render json: @restaurator, status: :precondition_failed, location: @restaurator }
+        end
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to new_restaurator_url, notice: 'Email address already used by another user.' }
+        format.json { render json: @restaurator, status: :precondition_failed, location: @restaurator }
       end
     end
   end

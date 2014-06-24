@@ -1,32 +1,36 @@
 <h1>Restaurants</h1>
-
 <table class="table table-striped">
-  <tr>
-    <th>Nom</th>
-    <th>Adresse</th>
-    <th>Restaurateur assigné</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @restaurants.each do |restaurant| %>
-  <tr>
-    <td><%= restaurant.name %></td>
-    <td><%= restaurant.address %></td>
-    <% if (restaurant.restaurator_id != nil) %>
-        <td><%= Restaurator.find(restaurant.restaurator_id).name %></td>
-    <%else %>
-        <td></td>
-    <%end %>
-
-    <td><%= link_to 'Détails', restaurant %></td>
-    <td><%= link_to 'Modifier', edit_restaurant_path(restaurant) %></td>
-    <td><%= link_to 'Supprimer', restaurant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+    <thead>
+        <tr>
+        <th>Nom</th>
+        <th>Adresse</th>
+        <th>Restaurateur assigné</th>
+        <th>Entrepreneur assigné</th>
+        <th></th>
+        <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @restaurants.each do |restaurant| %>
+          <tr>
+            <td><%= restaurant.name %></td>
+            <td><%= restaurant.address %></td>
+            <% if (restaurant.restaurator_id != nil) %>
+                <td><%= Restaurator.find_by_id(restaurant.restaurator_id).name %></td>
+            <%else %>
+                <td></td>
+            <%end %>
+            <% if (restaurant.entrepreneur_id != nil) %>
+                <td><%= Entrepreneur.find_by_id(restaurant.entrepreneur_id).name %></td>
+            <%else %>
+                <td></td>
+            <%end %>
+            <td><%= link_to 'Détails', restaurant %></td>
+            <td><%= link_to 'Modifier', edit_restaurant_path(restaurant) %></td>
+            <td><%= link_to 'Supprimer', restaurant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+    </tbody>
 </table>
-
 <br />
-
 <%= link_to 'Nouveau restaurant', new_restaurant_path %>

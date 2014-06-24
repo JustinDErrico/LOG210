@@ -1,7 +1,7 @@
 class Restaurator < Client
-  attr_accessible :linkedRestaurant
-  attr_accessor :linkedRestaurant
+	attr_accessible :linkedRestaurant
+	attr_accessor :linkedRestaurant
 
-  has_many :restaurants
+	has_many :restaurants
 
 end
