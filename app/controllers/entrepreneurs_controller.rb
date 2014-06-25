@@ -54,6 +54,16 @@ class EntrepreneursController < ApplicationController
 
         respond_to do |format|
           if @entrepreneur.save
+
+            if (@entrepreneur.linkedRestaurant != '')
+              @restaurant = Restaurant.find(@entrepreneur.linkedRestaurant)
+
+              if(@restaurant != nil)
+                @restaurant.update_attribute(:entrepreneur_id, @entrepreneur.id)
+
+              end
+            end
+
             format.html { redirect_to @entrepreneur, notice: 'Entrepreneur was successfully created.' }
             format.json { render json: @entrepreneur, status: :created, location: @entrepreneur }
           else
@@ -79,6 +89,16 @@ class EntrepreneursController < ApplicationController
   # PUT /entrepreneurs/1.json
   def update
     @entrepreneur = Entrepreneur.find(params[:id])
+    temp_entrepreneur = Entrepreneur.new(params[:entrepreneur])
+
+    if (temp_entrepreneur.linkedRestaurant != '')
+      @restaurant = Restaurant.find(temp_entrepreneur.linkedRestaurant)
+
+      if(@restaurant != nil)
+        @restaurant.update_attribute(:entrepreneur_id, @entrepreneur.id)
+
+      end
+    end
 
     respond_to do |format|
       if @entrepreneur.update_attributes(params[:entrepreneur])

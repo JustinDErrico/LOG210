@@ -66,15 +66,14 @@ class RestaurantsController < ApplicationController
   # PUT /restaurants/1.json
   def update
     @restaurant = Restaurant.find(params[:id])
+    temp_restaurant = Restaurant.new(params[:restaurant])
 
-    logger.debug "New post: #{@restaurant.linkedRestaurator.inspect}"
-
-    if (@restaurant.linkedRestaurator != '')
-      @restaurant.restaurator_id = @restaurant.linkedRestaurator
+    if (temp_restaurant.linkedRestaurator != '')
+      @restaurant.restaurator_id = temp_restaurant.linkedRestaurator
     end
 
-    if (@restaurant.linkedEntrepreneur != '')
-      @restaurant.entrepreneur_id = @restaurant.linkedEntrepreneur
+    if (temp_restaurant.linkedEntrepreneur != '')
+      @restaurant.entrepreneur_id = temp_restaurant.linkedEntrepreneur
     end
 
     respond_to do |format|

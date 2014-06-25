@@ -54,6 +54,16 @@ class RestauratorsController < ApplicationController
 
         respond_to do |format|
           if @restaurator.save
+
+            if (@restaurator.linkedRestaurant != '')
+              @restaurant = Restaurant.find(@restaurator.linkedRestaurant)
+
+              if(@restaurant != nil)
+                @restaurant.update_attribute(:restaurator_id, @restaurator.id)
+
+              end
+            end
+
             format.html { redirect_to @restaurator, notice: 'Restaurator was successfully created.' }
             format.json { render json: @restaurator, status: :created, location: @restaurator }
           else
@@ -79,6 +89,16 @@ class RestauratorsController < ApplicationController
   # PUT /restaurators/1.json
   def update
     @restaurator = Restaurator.find(params[:id])
+    temp_restaurator = Restaurator.new(params[:restaurator])
+
+    if (temp_restaurator.linkedRestaurant != '')
+      @restaurant = Restaurant.find(temp_restaurator.linkedRestaurant)
+
+      if(@restaurant != nil)
+        @restaurant.update_attribute(:restaurator_id, @restaurator.id)
+
+      end
+    end
 
     respond_to do |format|
       if @restaurator.update_attributes(params[:restaurator])
