@@ -33,5 +33,10 @@ body {
     text-decoration: underline !important;
 }
 .imgLogo{
-    padding-top: 20px;
+
+}
+.navbar-brand{
+
+     padding: 0 15px 0 5px !important;
+
 }
