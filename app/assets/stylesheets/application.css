@@ -12,13 +12,15 @@
  *= require bootstrap
  *= require_tree .
  */
- 
+
 body {
 	padding-top: 70px;
+    position:relative;
 
 }
 .container{
     background: white;
+    position:relative;
 }
 .user_nav{
     height:50px;
@@ -38,5 +40,14 @@ body {
 .navbar-brand{
 
      padding: 0 15px 0 5px !important;
+
+}
+.topPage{
+    background: url('/assets/backgroundtop.png');
+    height: 100%;
+    width: 100%;
+    margin-top: 12px;
+    margin-bottom: -5px;
+    padding: 2px;
 
 }
