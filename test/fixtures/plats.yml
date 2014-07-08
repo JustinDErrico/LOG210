@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  menu_id: 1
+  nom: MyString
+  description: MyString
+  prix: 1.5
+
+two:
+  menu_id: 1
+  nom: MyString
+  description: MyString
+  prix: 1.5

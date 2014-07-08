@@ -1,0 +1,29 @@
+<%= form_for(@menu) do |f| %>
+  <% if @menu.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@menu.errors.count, "error") %> prohibited this menu from being saved:</h2>
+
+      <ul>
+      <% @menu.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= f.label :nom %><br />
+    <%= f.text_field :nom, :class=>'form-control', :placeholder=>'Entrez le nom' %>
+  </div>
+  <h2>Plats</h2>
+  <div class="plats">
+    <%= f.fields_for :plats do |builder| %>
+      <%= render 'plat_fields', :f => builder %>
+    <% end %>
+    <%= link_to_add_fields "Ajouter plat", f, :plats %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit 'Soumettre', :class=>'btn btn-primary' %>
+  </div>
+
+<% end %>

@@ -1,0 +1,37 @@
+<h1>Menus</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Restaurant</th>
+      <th>Nom</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @menus.each do |menu| %>
+    <tr>
+      <% if (menu.restaurant_id != nil) %>
+        <% @restaurant = Restaurant.find(menu.restaurant_id) %>
+        <% if (@restaurant != nil) %>
+            <td><%= @restaurant.name %></td>
+        <%else %>
+            <td></td>
+        <%end %>
+      <%else %>
+          <td></td>
+      <%end %>
+      <td><%= menu.nom %></td>
+      <td><%= link_to 'Show', menu %></td>
+      <td><%= link_to 'Edit', edit_menu_path(menu) %></td>
+      <td><%= link_to 'Destroy', menu, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+</tbody>
+</table>
+
+<br />
+
+<%= link_to 'New Menu', new_menu_path %>

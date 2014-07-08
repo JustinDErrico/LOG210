@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140618010305) do
+ActiveRecord::Schema.define(:version => 20140708030643) do
 
   create_table "administrators", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -27,7 +27,6 @@ ActiveRecord::Schema.define(:version => 20140618010305) do
     t.string   "phoneNumber"
     t.string   "clientType"
     t.string   "zipCode"
-    
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
@@ -37,9 +36,20 @@ ActiveRecord::Schema.define(:version => 20140618010305) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "restaurators", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "menus", :force => true do |t|
+    t.integer  "restaurant_id"
+    t.string   "nom"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "plats", :force => true do |t|
+    t.integer  "menu_id"
+    t.string   "nom"
+    t.string   "description"
+    t.float    "prix"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "restaurants", :force => true do |t|
@@ -47,10 +57,13 @@ ActiveRecord::Schema.define(:version => 20140618010305) do
     t.string   "address"
     t.integer  "entrepreneur_id"
     t.integer  "restaurator_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
 
-    t.timestamps
+  create_table "restaurators", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end

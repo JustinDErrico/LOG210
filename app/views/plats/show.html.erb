@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Menu:</b>
+  <%= @plat.menu_id %>
+</p>
+
+<p>
+  <b>Nom:</b>
+  <%= @plat.nom %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @plat.description %>
+</p>
+
+<p>
+  <b>Prix:</b>
+  <%= @plat.prix %>
+</p>
+
+
+<%= link_to 'Edit', edit_plat_path(@plat) %> |
+<%= link_to 'Back', plats_path %>

@@ -1,0 +1,18 @@
+<div class="fields">
+  <div class="field">
+    <%= f.label :nom %><br />
+    <%= f.text_field :nom %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </div>
+  <div class="field">
+    <%= f.label :prix %><br />
+    <%= f.text_field :prix %>
+  </div>
+  <div class="field">
+    <%= f.hidden_field :_destroy %>
+    <%= link_to_function "remove", "remove_fields(this)" %>
+  </div>
+</div>

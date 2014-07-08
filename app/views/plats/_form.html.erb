@@ -1,0 +1,33 @@
+<%= form_for @plat, :html => { :class => "form_plat" } do |f| %>
+  <% if @plat.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@plat.errors.count, "error") %> prohibited this plat from being saved:</h2>
+
+      <ul>
+      <% @plat.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :menu_id %><br />
+    <%= f.number_field :menu_id %>
+  </div>
+  <div class="field">
+    <%= f.label :nom %><br />
+    <%= f.text_field :nom %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </div>
+  <div class="field">
+    <%= f.label :prix %><br />
+    <%= f.text_field :prix %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

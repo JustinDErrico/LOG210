@@ -16,12 +16,22 @@
             <td><%= restaurant.name %></td>
             <td><%= restaurant.address %></td>
             <% if (restaurant.restaurator_id != nil) %>
-                <td><%= Restaurator.find_by_id(restaurant.restaurator_id).name %></td>
+                <% @restaurant = Restaurator.find_by_id(restaurant.restaurator_id) %>
+                <% if (@restaurant != nil) %>
+                    <td><%= @restaurant.name %></td>
+                <%else %>
+                    <td></td>
+                <%end %>
             <%else %>
                 <td></td>
             <%end %>
             <% if (restaurant.entrepreneur_id != nil) %>
-                <td><%= Entrepreneur.find_by_id(restaurant.entrepreneur_id).name %></td>
+                <% @entrepreneur = Entrepreneur.find_by_id(restaurant.entrepreneur_id) %>
+                <% if (@entrepreneur != nil) %>
+                    <td><%= @entrepreneur.name %></td>
+                <%else %>
+                    <td></td>
+                <%end %>
             <%else %>
                 <td></td>
             <%end %>

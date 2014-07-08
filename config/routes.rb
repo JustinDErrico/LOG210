@@ -1,4 +1,10 @@
 LOG210::Application.routes.draw do
+  resources :menus
+
+
+  resources :plats
+
+
   resources :clients
   get "clients/index"
 

@@ -1,0 +1,32 @@
+<h1>Plats</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Menu</th>
+      <th>Nom</th>
+      <th>Description</th>
+      <th>Prix</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @plats.each do |plat| %>
+    <tr>
+      <td><%= plat.menu_id %></td>
+      <td><%= plat.nom %></td>
+      <td><%= plat.description %></td>
+      <td><%= plat.prix %></td>
+      <td><%= link_to 'Show', plat %></td>
+      <td><%= link_to 'Edit', edit_plat_path(plat) %></td>
+      <td><%= link_to 'Destroy', plat, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br />
+
+<%= link_to 'New Plat', new_plat_path %>
