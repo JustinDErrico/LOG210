@@ -28,10 +28,24 @@
 		    </div>
 		    <div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li><%= link_to 'Clients', clients_path %></li>
-					<li><%= link_to 'Restaurants', restaurants_path %></li>
-					<li><%= link_to 'Restaurateurs', restaurators_path %></li>
-					<li><%= link_to 'Entrepreneurs', entrepreneurs_path %></li>
+					<% if current_user %>
+						<% if current_user[:clientType] == Client::CLIENT_TYPES[:administrator] %>
+							<li><%= link_to 'Clients', clients_path %></li>
+							<li><%= link_to 'Restaurants', restaurants_path %></li>
+							<li><%= link_to 'Restaurateurs', restaurators_path %></li>
+							<li><%= link_to 'Entrepreneurs', entrepreneurs_path %></li>
+						<% elsif current_user[:clientType] == Client::CLIENT_TYPES[:visitor] %>
+						<% elsif current_user[:clientType] == Client::CLIENT_TYPES[:entrepreneur] %>
+							<li><%= link_to 'Clients', clients_path %></li>
+							<li><%= link_to 'Restaurants', restaurants_path %></li>
+							<li><%= link_to 'Restaurateurs', restaurators_path %></li>
+						<% elsif current_user[:clientType] == Client::CLIENT_TYPES[:restaurator] %>
+							<li><%= link_to 'Clients', clients_path %></li>
+							<li><%= link_to 'Restaurants', restaurants_path %></li>
+						<% elsif current_user[:clientType] == Client::CLIENT_TYPES[:deliverer] %>
+							<li><%= link_to 'Clients', clients_path %></li>
+						<% end %>
+					<% end %>
 				</ul>
               <div id="user_nav" class="user_nav">
                 <% if current_user %>
