@@ -1,3 +1,14 @@
+<%
+   if current_user.clientType == Client::CLIENT_TYPES[:administrator]
+     @restaurants = Restaurant.all
+   else
+     if current_user.clientType == Client::CLIENT_TYPES[:restaurator]
+       @restaurants = Restaurant.where(:restaurator_id => current_user.id)
+     end
+   end
+%>
+
+
 <%= form_for(@menu) do |f| %>
   <% if @menu.errors.any? %>
     <div id="error_explanation">
@@ -14,13 +25,18 @@
     <%= f.label :nom %><br />
     <%= f.text_field :nom, :class=>'form-control', :placeholder=>'Entrez le nom' %>
   </div>
+
   <h2>Plats</h2>
+  <div class="form-group">
+    <%= f.label :restaurant_id, 'Restaurant assigné' %><br />
+    <%= f.collection_select :restaurant_id, @restaurants,:id, :name, :prompt => 'Assignez un restaurant' %>
+  </div>
   <div class="plats">
     <%= f.fields_for :plats do |builder| %>
       <%= render 'plat_fields', :f => builder %>
     <% end %>
     <%= link_to_add_fields "Ajouter plat", f, :plats %>
-  </div>
+  </div><br />
 
   <div class="actions">
     <%= f.submit 'Soumettre', :class=>'btn btn-primary' %>

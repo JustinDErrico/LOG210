@@ -1,0 +1,26 @@
+<%
+   @restaurants = Restaurant.all
+%>
+
+<%= form_for(@commande) do |f| %>
+  <% if @commande.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@commande.errors.count, "error") %> prohibited this commande from being saved:</h2>
+
+      <ul>
+      <% @commande.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :restaurant_id, 'Restaurant' %><br />
+    <%= f.collection_select :restaurant_id, @restaurants,:id, :name, :action => 'show', :prompt => 'Choisissez un restaurant' %>
+  </div>
+
+    <div class="actions">
+      <%= f.submit 'Choisir', :class=>'btn btn-primary' %>
+    </div>
+<% end %>

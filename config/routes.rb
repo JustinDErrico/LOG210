@@ -1,4 +1,15 @@
 LOG210::Application.routes.draw do
+  resources :produits
+
+
+  resources :commandes do
+    collection do
+      get :choisir_produits
+      get :save_commande
+    end
+  end
+
+
   resources :menus
 
 

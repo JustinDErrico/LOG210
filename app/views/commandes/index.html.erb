@@ -1,0 +1,50 @@
+
+
+<h1>Commandes</h1>
+
+<table class="table table-striped">
+  <tr>
+    <% if current_user.clientType == Client::CLIENT_TYPES[:administrator]%>
+        <th>Client</th>
+    <% end %>
+    <th>Restaurant</th>
+    <th>Quantité de produits</th>
+    <th>Prix total</th>
+  </tr>
+
+<% @commandes.each do |commande| %>
+<% canview = true
+
+   if current_user.clientType == Client::CLIENT_TYPES[:visitor] && commande.client_id != current_user.id
+     canview = false
+   end
+%>
+<% if canview
+
+    totalPrice = 0
+    produits = Produit.find_all_by_commande_id(commande.id)
+
+    produits.each do |produit|
+      totalPrice = totalPrice + Plat.find(produit.plat_id).prix
+    end %>
+    <tr>
+
+    <% if current_user.clientType == Client::CLIENT_TYPES[:administrator]%>
+      <td><%= Client.find(commande.client_id).emailAddress %></td>
+    <% end %>
+    <td><%= Restaurant.find(commande.restaurant_id).name %></td>
+    <td><%= produits.count %></td>
+    <td><%= totalPrice %></td>
+
+    <td><%= link_to 'Détails', commande %></td>
+    <td><%= link_to 'Modifier', edit_commande_path(commande) %></td>
+    <td><%= link_to 'Supprimer', commande, method: :delete, data: { confirm: 'Êtes-vous certain?' } %></td>
+    </tr>
+  <% end %>
+<% end %>
+</table>
+
+<br />
+<% if current_user.clientType == Client::CLIENT_TYPES[:visitor]%>
+  <%= link_to 'Nouvelle commande', new_commande_path %>
+<% end %>

@@ -1,0 +1,50 @@
+<%
+   plats = Plat.find_all_by_menu_id(Menu.find_all_by_restaurant_id(params[:restaurant_id]))
+   list_produits = Array.new
+%>
+
+
+<h2><%= Restaurant.find(params[:restaurant_id]).name%></h2><br />
+
+<%= form_for(@produit) do |f| %>
+  <% if @produit.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@produit.errors.count, "error") %> prohibited this produit from being saved:</h2>
+
+      <ul>
+      <% @produit.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <% if !Menu.find_by_restaurant_id(params[:restaurant_id]).nil? %>
+        <h3><%= Menu.find_by_restaurant_id(params[:restaurant_id]).nom %></h3><br />
+
+        <% plats.each do |plat|
+
+          produit = Produit.new
+
+          produit.plat_id = plat.id %>
+
+            <%= f.number_field :quantity %><p><%= plat.nom %> (<%= plat.prix %>$)</p>
+            <p>Description: <%= plat.description %></p><br />
+
+        <% list_produits.push(produit)
+           end %>
+        <% session[:commande_courante] = list_produits  %>
+        <div class="actions">
+          <%= f.submit 'Commander', :class=>'btn btn-primary' %>
+        </div>
+    <% else %>
+        <h3>Ce restaurant n'a pas encore de menu.</h3>
+        <%= link_to 'Retour', new_commande_path %>
+    <% end %>
+<% end %>
+
+
+
+
+
+

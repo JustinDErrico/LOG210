@@ -24,9 +24,9 @@
           <td></td>
       <%end %>
       <td><%= menu.nom %></td>
-      <td><%= link_to 'Show', menu %></td>
-      <td><%= link_to 'Edit', edit_menu_path(menu) %></td>
-      <td><%= link_to 'Destroy', menu, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <td><%= link_to 'Détails', menu %></td>
+      <td><%= link_to 'Modifier', edit_menu_path(menu) %></td>
+      <td><%= link_to 'Supprimer', menu, method: :delete, data: { confirm: 'Êtes-vous certain?' } %></td>
     </tr>
   <% end %>
 </tbody>
@@ -34,4 +34,4 @@
 
 <br />
 
-<%= link_to 'New Menu', new_menu_path %>
+<%= link_to 'Nouveau menu', new_menu_path %>

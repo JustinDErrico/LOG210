@@ -12,33 +12,39 @@
     </thead>
     <tbody>
         <% @restaurants.each do |restaurant| %>
-          <tr>
-            <td><%= restaurant.name %></td>
-            <td><%= restaurant.address %></td>
-            <% if (restaurant.restaurator_id != nil) %>
-                <% @restaurant = Restaurator.find_by_id(restaurant.restaurator_id) %>
-                <% if (@restaurant != nil) %>
-                    <td><%= @restaurant.name %></td>
+          <% canView = true
+             if current_user.clientType == Client::CLIENT_TYPES[:restaurator] && restaurant.restaurator_id != current_user.id
+               canView = false
+             end %>
+          <% if canView %>
+              <tr>
+                <td><%= restaurant.name %></td>
+                <td><%= restaurant.address %></td>
+                <% if (restaurant.restaurator_id != nil) %>
+                    <% @restaurant = Restaurator.find_by_id(restaurant.restaurator_id) %>
+                    <% if (@restaurant != nil) %>
+                        <td><%= @restaurant.name %></td>
+                    <%else %>
+                        <td></td>
+                    <%end %>
                 <%else %>
                     <td></td>
                 <%end %>
-            <%else %>
-                <td></td>
-            <%end %>
-            <% if (restaurant.entrepreneur_id != nil) %>
-                <% @entrepreneur = Entrepreneur.find_by_id(restaurant.entrepreneur_id) %>
-                <% if (@entrepreneur != nil) %>
-                    <td><%= @entrepreneur.name %></td>
+                <% if (restaurant.entrepreneur_id != nil) %>
+                    <% @entrepreneur = Entrepreneur.find_by_id(restaurant.entrepreneur_id) %>
+                    <% if (@entrepreneur != nil) %>
+                        <td><%= @entrepreneur.name %></td>
+                    <%else %>
+                        <td></td>
+                    <%end %>
                 <%else %>
                     <td></td>
                 <%end %>
-            <%else %>
-                <td></td>
-            <%end %>
-            <td><%= link_to 'Détails', restaurant %></td>
-            <td><%= link_to 'Modifier', edit_restaurant_path(restaurant) %></td>
-            <td><%= link_to 'Supprimer', restaurant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          </tr>
+                <td><%= link_to 'Détails', restaurant %></td>
+                <td><%= link_to 'Modifier', edit_restaurant_path(restaurant) %></td>
+                <td><%= link_to 'Supprimer', restaurant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              </tr>
+          <% end %>
         <% end %>
     </tbody>
 </table>

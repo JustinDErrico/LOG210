@@ -1,5 +1,5 @@
-<%@restaurators = Restaurator.where(:clientType => 'restaurator')%>
-<%@entrepreneurs = Entrepreneur.where(:clientType => 'entrepreneur')%>
+<%@restaurators = Restaurator.where(:clientType => Client::CLIENT_TYPES[:restaurator])%>
+<%@entrepreneurs = Entrepreneur.where(:clientType => Client::CLIENT_TYPES[:entrepreneur])%>
 
 <%= form_for(@restaurant) do |f| %>
   <% if @restaurant.errors.any? %>

@@ -11,7 +11,7 @@
     <th>Courriel</th>
     <th>Mot de passe</th>
     <th>Type de client</th>
-    <th>Restaurant assigné</th>
+    <th>Restaurants assignés</th>
     <th></th>
     <th></th>
     <th></th>
@@ -29,12 +29,7 @@
             <td><%= restaurator.emailAddress %></td>
             <td><%= restaurator.password %></td>
             <td><%= restaurator.clientType %></td>
-            <%@restaurant = Restaurant.find_all_by_restaurator_id(restaurator.id) %>
-            <% if (@restaurant.first != nil) %>
-                <td><%= @restaurant.first.name %></td>
-            <%else %>
-                <td></td>
-            <%end %>
+            <td><%= @restaurant = Restaurant.find_all_by_restaurator_id(restaurator.id).count %></td>
             <td><%= link_to 'Détails', restaurator %></td>
             <td><%= link_to 'Modifier', edit_restaurator_path(restaurator) %></td>
             <td><%= link_to 'Supprimer', restaurator, method: :delete, data: { confirm: 'Êtes-vous certain?' } %></td>

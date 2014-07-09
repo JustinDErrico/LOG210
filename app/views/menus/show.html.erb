@@ -2,7 +2,7 @@
 
 <p>
   <b>Restaurant:</b>
-  <%= @menu.restaurant_id %>
+  <%= Restaurant.find(@menu.restaurant_id).name %>
 </p>
 
 <p>

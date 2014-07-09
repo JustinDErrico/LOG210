@@ -43,6 +43,8 @@ class RestauratorsController < ApplicationController
     @restaurator = Restaurator.new(params[:restaurator])
     @restaurator.setAsRestaurator
 
+    @restaurant_ids = Array.new
+    restaurants_id_count = 0
     #valide si l'adresse email donnée existe déjà dans la BD
     if(Restaurator.find_all_by_emailAddress(@restaurator.emailAddress).empty?)
 
@@ -52,15 +54,27 @@ class RestauratorsController < ApplicationController
         #hashage du password
         @restaurator.password = @restaurator.encrypt_password
 
+        #sauvegarde des id des restaurants
+        @restaurator.linkedRestaurant.each do |checkedRestaurant|
+          if (checkedRestaurant != '0')
+            @restaurant_ids.push(checkedRestaurant)
+            restaurants_id_count = restaurants_id_count + 1
+          end
+        end
+
+        #nombre de restaurants liés au restaurateur
+        @restaurator.linkedRestaurant = restaurants_id_count
+
         respond_to do |format|
           if @restaurator.save
 
-            if (@restaurator.linkedRestaurant != '')
-              @restaurant = Restaurant.find(@restaurator.linkedRestaurant)
+            #assignation des restaurants
+            @restaurant_ids.each do |checkedRestaurant|
+
+              @restaurant = Restaurant.find(checkedRestaurant)
 
               if(@restaurant != nil)
                 @restaurant.update_attribute(:restaurator_id, @restaurator.id)
-
               end
             end
 

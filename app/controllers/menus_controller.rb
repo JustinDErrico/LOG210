@@ -42,14 +42,14 @@ class MenusController < ApplicationController
   def create
     @menu = Menu.new(params[:menu])
 
-    if current_user[:clientType] == Client::CLIENT_TYPES[:restaurator]
-      @restaurant = Restaurant.find_by_restaurator_id(current_user[:id])
+    if current_user[:clientType] == Client::CLIENT_TYPES[:restaurator] || current_user[:clientType] == Client::CLIENT_TYPES[:administrator]
+      @restaurant = Restaurant.find(@menu.restaurant_id)
       if @restaurant != nil
         @menu.restaurant_id = @restaurant.id
       end
     end
 
-    if !@menu[:name].nil?
+    if !@menu[:name] != ''
       respond_to do |format|
         if @menu.save
           format.html { redirect_to @menu, notice: 'Menu was successfully created.' }

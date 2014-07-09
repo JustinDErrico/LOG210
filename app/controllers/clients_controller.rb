@@ -59,6 +59,10 @@ class ClientsController < ApplicationController
         respond_to do |format|
           #si la sauvegarde des informations dans la BD fonctionne
           if @client.save
+
+            session[:client_type] = @client.clientType
+            session[:client_id] = @client.id
+
             format.html { redirect_to @client, notice: 'Client was successfully created.' }
             format.json { render json: @client, status: :created, location: @client }
           else

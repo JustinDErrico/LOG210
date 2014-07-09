@@ -45,9 +45,18 @@
       <%= f.label :password_confirmation, 'Confirmation du mot de passe' %><br />
       <%= f.password_field :password_confirmation, :class=>'form-control', :placeholder=>'Confirmez le mot de passe' %>
     </div>
-    <div class="form-group">
+    <div>
       <%= f.label :linkedRestaurant, 'Restaurant assigné' %><br />
-      <%= f.collection_select :linkedRestaurant, @restaurants,:id, :name, :prompt => 'Assignez un restaurant' %>
+      <% @restaurants.each do |restaurant|
+          checked = false
+
+          if restaurant.restaurator_id == @restaurator.id
+            checked = true
+          end%>
+          <%= f.check_box(:linkedRestaurant,{:checked=>checked}, restaurant.id) %>
+          <%= f.label :restaurant_id, restaurant.name %>
+          <br />
+      <% end %>
     </div>
     <div class="form-group">
       <%= f.submit 'Soumettre', :class=>'btn btn-primary' %>

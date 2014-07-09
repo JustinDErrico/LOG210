@@ -1,0 +1,33 @@
+<%
+   plats = Plat.find_all_by_menu_id(Menu.find_all_by_restaurant_id(params[:restaurant_id]))
+   list_produits = Array.new
+%>
+
+<h2><%= Restaurant.find(params[:restaurant_id]).name%></h2><br />
+
+<% if !Menu.find_by_restaurant_id(params[:restaurant_id]).nil? %>
+    <h3><%= Menu.find_by_restaurant_id(params[:restaurant_id]).nom %></h3><br />
+
+    <% plats.each do |plat|
+
+        produit = Produit.new
+
+        produit.plat_id = plat.id %>
+
+        <%= number_field_tag produit.quantity %><p><%= plat.nom %> (<%= plat.prix %>$)</p><br />
+        <p><%= plat.description %></p>
+
+      <% list_produits.push(produit)
+     end %>
+    <% session[:commande_courante] = list_produits  %>
+       <div class="actions">
+    <%= f.submit 'Choisir', :class=>'btn btn-primary' %>
+    </div>
+    %>
+<% else %>
+    <h3>Ce restaurant n'a pas encore de menu.</h3>
+    <%= link_to 'Retour', new_commande_path %>
+<% end %>
+
+
+
