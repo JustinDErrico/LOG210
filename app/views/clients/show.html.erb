@@ -40,4 +40,5 @@
 </p>
 
 <%= link_to 'Modifier', edit_client_path(@client) %> |
+<%= link_to 'Supprimer', @client, method: :delete, data: { confirm: 'Êtes-vous certain?' } %></td> |
 <%= link_to 'Retour', clients_path %>

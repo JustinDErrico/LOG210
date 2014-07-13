@@ -31,18 +31,16 @@
 					<% if current_user %>
 						<% if current_user[:clientType] == Client::CLIENT_TYPES[:administrator] %>
 							<li><%= link_to 'Clients', clients_path %></li>
+                            <li><%= link_to 'Restaurants', restaurants_path %></li>
 							<li><%= link_to 'Menus', menus_path %></li>
-							<li><%= link_to 'Restaurants', restaurants_path %></li>
-							<li><%= link_to 'Restaurateurs', restaurators_path %></li>
-							<li><%= link_to 'Entrepreneurs', entrepreneurs_path %></li>
                             <li><%= link_to 'Commandes', commandes_path %></li>
 						<% elsif current_user[:clientType] == Client::CLIENT_TYPES[:visitor] %>
                             <li><%= link_to 'Commandes', commandes_path %></li>
 						<% elsif current_user[:clientType] == Client::CLIENT_TYPES[:entrepreneur] %>
+                            <li><%= link_to 'Restaurants', restaurants_path %></li>
 							<li><%= link_to 'Restaurateurs', restaurators_path %></li>
 						<% elsif current_user[:clientType] == Client::CLIENT_TYPES[:restaurator] %>
 							<li><%= link_to 'Menus', menus_path %></li>
-							<li><%= link_to 'Restaurants', restaurants_path %></li>
 						<% elsif current_user[:clientType] == Client::CLIENT_TYPES[:deliverer] %>
 						<% end %>
 					<% end %>

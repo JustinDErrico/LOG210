@@ -46,8 +46,8 @@ class RestaurantsController < ApplicationController
       @restaurant.restaurator_id = @restaurant.linkedRestaurator
     end
 
-    if (@restaurant.linkedEntrepreneur != '')
-      @restaurant.entrepreneur_id = @restaurant.linkedEntrepreneur
+    if (current_user.clientType == Client::CLIENT_TYPES[:entrepreneur])
+      @restaurant.entrepreneur_id = current_user.id
     end
 
     respond_to do |format|

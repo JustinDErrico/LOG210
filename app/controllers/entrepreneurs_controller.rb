@@ -54,16 +54,6 @@ class EntrepreneursController < ApplicationController
 
         respond_to do |format|
           if @entrepreneur.save
-
-            if (@entrepreneur.linkedRestaurant != '')
-              @restaurant = Restaurant.find(@entrepreneur.linkedRestaurant)
-
-              if(@restaurant != nil)
-                @restaurant.update_attribute(:entrepreneur_id, @entrepreneur.id)
-
-              end
-            end
-
             format.html { redirect_to @entrepreneur, notice: 'Entrepreneur was successfully created.' }
             format.json { render json: @entrepreneur, status: :created, location: @entrepreneur }
           else

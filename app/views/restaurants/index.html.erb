@@ -5,7 +5,9 @@
         <th>Nom</th>
         <th>Adresse</th>
         <th>Restaurateur assigné</th>
-        <th>Entrepreneur assigné</th>
+        <% if (current_user.clientType == Client::CLIENT_TYPES[:administrator]) %>
+          <th>Entrepreneur assigné</th>
+        <% end %>
         <th></th>
         <th></th>
         </tr>
@@ -13,7 +15,7 @@
     <tbody>
         <% @restaurants.each do |restaurant| %>
           <% canView = true
-             if current_user.clientType == Client::CLIENT_TYPES[:restaurator] && restaurant.restaurator_id != current_user.id
+             if current_user.clientType == Client::CLIENT_TYPES[:entrepreneur] && restaurant.entrepreneur_id != current_user.id
                canView = false
              end %>
           <% if canView %>
@@ -30,7 +32,7 @@
                 <%else %>
                     <td></td>
                 <%end %>
-                <% if (restaurant.entrepreneur_id != nil) %>
+                <% if (current_user.clientType == Client::CLIENT_TYPES[:administrator] && restaurant.entrepreneur_id != nil) %>
                     <% @entrepreneur = Entrepreneur.find_by_id(restaurant.entrepreneur_id) %>
                     <% if (@entrepreneur != nil) %>
                         <td><%= @entrepreneur.name %></td>

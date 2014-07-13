@@ -26,10 +26,6 @@
       <%= f.label :linkedRestaurator, 'Restaurateur assigné' %><br />
       <%= f.collection_select :linkedRestaurator, @restaurators,:id, :name, :prompt => 'Assignez un restaurateur' %>
     </div>
-    <div class="form-group">
-      <%= f.label :linkedEntrepreneur, 'Entrepreneur assigné' %><br />
-      <%= f.collection_select :linkedEntrepreneur, @entrepreneurs,:id, :name, :prompt => 'Assignez un entrepreneur' %>
-    </div>
    <div class="form-group">
      <%= f.submit 'Soumettre', :class=>'btn btn-primary' %>
    </div>

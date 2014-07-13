@@ -116,11 +116,19 @@ class ClientsController < ApplicationController
   # DELETE /clients/1.json
   def destroy
     @client = Client.find(params[:id])
-    @client.destroy
 
-    respond_to do |format|
-      format.html { redirect_to clients_url }
-      format.json { head :no_content }
+    if (@client.id == current_user.id)
+      session[:client_id] = nil
+      session[:client_type] = nil
+
+      @client.destroy
+      redirect_to root_url
+    else
+      @client.destroy
+      respond_to do |format|
+        format.html { redirect_to clients_url }
+        format.json { head :no_content }
+      end
     end
   end
 end

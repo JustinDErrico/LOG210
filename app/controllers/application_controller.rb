@@ -16,6 +16,6 @@ class ApplicationController < ActionController::Base
   end
   
   def current_user
-    @current_user ||= Client.find(session[:client_id]) if session[:client_id]
+      @current_user ||= Client.find(session[:client_id]) if session[:client_id]
   end
 end

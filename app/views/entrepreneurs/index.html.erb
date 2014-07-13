@@ -19,7 +19,7 @@
   </thead>
   <tbody>
   <% @entrepreneurs.each do |entrepreneur|
-    if (entrepreneur.clientType == 'entrepreneur') %>
+    if (entrepreneur.clientType == Client::CLIENT_TYPES[:entrepreneur]) %>
       <tr>
         <td><%= entrepreneur.name %></td>
         <td><%= entrepreneur.dateOfBirth %></td>
