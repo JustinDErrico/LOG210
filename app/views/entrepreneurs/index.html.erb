@@ -9,7 +9,7 @@
     <th>Adresse</th>
     <th>Code postal</th>
     <th>Courriel</th>
-    <th>Mot de passe</th>
+    <th style="display: none;">Mot de passe</th>
     <th>Type de client</th>
     <th>Restaurant assigné</th>
     <th></th>
@@ -27,7 +27,7 @@
         <td><%= entrepreneur.address %></td>
         <td><%= entrepreneur.zipCode %></td>
         <td><%= entrepreneur.emailAddress %></td>
-        <td><%= entrepreneur.password %></td>
+        <td style="display: none;"><%= entrepreneur.password %></td>
         <td><%= entrepreneur.clientType %></td>
         <%@restaurant = Restaurant.find_all_by_entrepreneur_id(entrepreneur.id) %>
         <% if (@restaurant.first != nil) %>

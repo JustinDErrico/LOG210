@@ -11,7 +11,7 @@
             <th>Adresse</th>
             <th>Code postal</th>
             <th>Courriel</th>
-            <th>Mot de passe</th>
+            <th style="display: none;">Mot de passe</th>
             <th>Type de client</th>
             <th></th>
             <th></th>
@@ -27,7 +27,7 @@
             <td><%= client.address %></td>
             <td><%= client.zipCode %></td>
             <td><%= client.emailAddress %></td>
-            <td><%= client.password %></td>
+            <td style="display: none;"><%= client.password %></td>
             <td><%= client.clientType %></td>
             <td><%= link_to 'Détails', client %></td>
             <td><%= link_to 'Modifier', edit_client_path(client) %></td>
