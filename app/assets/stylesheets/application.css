@@ -55,3 +55,9 @@ body {
 .fields {
     margin-bottom: 20px;
 }
+
+#flash_notice{
+
+    text-align: center;
+    padding-bottom: 12px;
+}
