@@ -24,7 +24,9 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/login"> <%= image_tag("logo.jpg",:class =>"imgLogo", :alt => "Mexican Express Delivery logo") %></a>
+
+              <%= link_to(image_tag("logo.jpg", :alt => "logo", :title => "Mexican Express Delivery", :class=>"imgLogo", :id=>"logo"), "/", :class=>"navbar-brand") %>
+
 		    </div>
 		    <div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
