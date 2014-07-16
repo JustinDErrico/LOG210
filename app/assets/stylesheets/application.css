@@ -30,13 +30,11 @@ body {
 
 }
 .navbar-collapse a:hover{
-    background:none;
+    background:none !important;
     color:black;
     text-decoration: underline !important;
 }
-.imgLogo{
 
-}
 .navbar-brand{
 
      padding: 0 15px 0 5px !important;
@@ -102,6 +100,11 @@ only screen and (max-width: 992px),
     td:nth-of-type(6):before { content: "Courriel :     "; }
     td:nth-of-type(8):before { content: "Type :     "; }
 
+    td > a
+    {
+        text-align: right;
+        display: block;
+    }
 }
 ::before
 {
