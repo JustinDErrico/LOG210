@@ -43,3 +43,4 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'debugger'
 gem 'bootstrap-sass', '~> 3.1.1.1'
+gem 'sqlite3'

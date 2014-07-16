@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140709044838) do
+ActiveRecord::Schema.define(:version => 20140716181551) do
 
   create_table "administrators", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -79,8 +79,9 @@ ActiveRecord::Schema.define(:version => 20140709044838) do
   end
 
   create_table "restaurators", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.integer  "entrepreneur_id"
   end
 
 end
