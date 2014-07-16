@@ -99,7 +99,7 @@ only screen and (max-width: 992px),
     td:nth-of-type(5):before { content: "Code postal  :    "; }
     td:nth-of-type(6):before { content: "Courriel :     "; }
     td:nth-of-type(8):before { content: "Type :     "; }
-
+    .restaurator td:nth-of-type(9):before { content: "Restaurants assignés:     "; }
     td > a
     {
         text-align: right;
