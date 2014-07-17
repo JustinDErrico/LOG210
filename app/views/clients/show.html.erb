@@ -1,43 +1,31 @@
+<p id="notice"><%= notice %></p>
+<table class="table table-striped" id="unseen">
+  <thead>
+  <tr>
+    <th>Nom</th>
+    <th>Date naissance</th>
+    <th>Téléphone</th>
+    <th>Adresse</th>
+    <th>Code postal</th>
+    <th>Courriel</th>
+    <th style="display: none;">Mot de passe</th>
+    <th>Type de client</th>
+  </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td> <%= @client.name %></td>
+        <td> <%= @client.dateOfBirth %></td>
+        <td> <%= @client.phoneNumber %></td>
+        <td> <%= @client.address %></td>
+        <td> <%= @client.zipCode %></td>
+        <td><%= @client.emailAddress %></td>
+        <td style="display: none;"> <%= @client.password %></td>
+        <td><%= @client.clientType %></td>
+      </tr>
+  </tbody>
+</table>
 
-<p>
-  <b>Nom:</b>
-  <%= @client.name %>
-</p>
-
-<p>
-  <b>Date naissance:</b>
-  <%= @client.dateOfBirth %>
-</p>
-
-<p>
-  <b>Numéro de téléphone:</b>
-  <%= @client.phoneNumber %>
-</p>
-
-<p>
-  <b>Addresse:</b>
-  <%= @client.address %>
-</p>
-
-<p>
-  <b>Code postal:</b>
-  <%= @client.zipCode %>
-</p>
-
-<p>
-  <b>Courriel:</b>
-  <%= @client.emailAddress %>
-</p>
-
-<p style="display:none;">
-  <b>Mot de passe:</b>
-  <%= @client.password %>
-</p>
-
-<p>
-  <b>Type client:</b>
-  <%= @client.clientType %>
-</p>
 
 <%= link_to 'Modifier', edit_client_path(@client) %> |
 <%= link_to 'Supprimer', @client, method: :delete, data: { confirm: 'Êtes-vous certain?' } %></td> |

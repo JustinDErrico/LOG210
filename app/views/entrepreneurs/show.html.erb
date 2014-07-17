@@ -1,44 +1,30 @@
 <p id="notice"><%= notice %></p>
-
-<p>
-  <b>Nom:</b>
-  <%= @entrepreneur.name %>
-</p>
-
-<p>
-  <b>Date naissance:</b>
-  <%= @entrepreneur.dateOfBirth %>
-</p>
-
-<p>
-  <b>Numéro de téléphone:</b>
-  <%= @entrepreneur.phoneNumber %>
-</p>
-
-<p>
-  <b>Addresse:</b>
-  <%= @entrepreneur.address %>
-</p>
-
-<p>
-  <b>Code postal:</b>
-  <%= @entrepreneur.zipCode %>
-</p>
-
-<p>
-  <b>Courriel:</b>
-  <%= @entrepreneur.emailAddress %>
-</p>
-
-<p style="display: none;">
-  <b>Mot de passe:</b>
-  <%= @entrepreneur.password %>
-</p>
-
-<p>
-  <b>Type client:</b>
-  <%= @entrepreneur.clientType %>
-</p>
+<table class="table table-striped" id="unseen">
+  <thead>
+  <tr>
+    <th>Nom</th>
+    <th>Date naissance</th>
+    <th>Téléphone</th>
+    <th>Adresse</th>
+    <th>Code postal</th>
+    <th>Courriel</th>
+    <th style="display: none;">Mot de passe</th>
+    <th>Type de client</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td> <%= @entrepreneur.name %></td>
+    <td> <%= @entrepreneur.dateOfBirth %></td>
+    <td> <%= @entrepreneur.phoneNumber %></td>
+    <td> <%= @entrepreneur.address %></td>
+    <td> <%= @entrepreneur.zipCode %></td>
+    <td><%= @entrepreneur.emailAddress %></td>
+    <td style="display: none;"> <%= @entrepreneur.password %></td>
+    <td><%= @entrepreneur.clientType %></td>
+  </tr>
+  </tbody>
+</table>
 
 <%= link_to 'Modifier', edit_entrepreneur_path(@entrepreneur) %> |
 <%= link_to 'Retour', entrepreneurs_path %>
