@@ -14,7 +14,12 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require_tree .
-
+$( document ).ready(function() {
+    if ($('#flash_notice').text() == "Invalid credentials")
+        $('#flash_notice').css({ "color": "red"})
+    else
+        $('#flash_notice').css({ "color": "green"})
+});
 function remove_fields(link)
 {
     $(link).parent().find('input[type=hidden]').val(1);
@@ -28,3 +33,4 @@ function add_fields(link, association, content)
 
     $(link).before(content.replace(regexp, new_id));
 }
+$
