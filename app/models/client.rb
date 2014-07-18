@@ -7,6 +7,16 @@ class Client < ActiveRecord::Base
   attr_accessible :address, :dateOfBirth, :emailAddress, :name, :password, :phoneNumber, :password_confirmation, :clientType, :zipCode
   attr_accessor :password_confirmation
 
+  #Validation des champs du formulaire
+    zip_regex_canada = %r{[ABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Z]{1} *\d{1}[A-Z]{1}\d{1}$}
+    validates :name, length: { minimum: 2 }
+    validates :address, length: { minimum: 2 }
+    validates :zipCode, :presence => true, :format => { :with => zip_regex_canada }
+    validates :phoneNumber, format: { with: /\d{3}\d{3}\d{4}/}
+    validates :emailAddress, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, on: :create }
+    validates :password, length: { minimum: 2 }
+   #Fin validation du formulaire
+
   def setAsAdmin
     self.clientType = CLIENT_TYPES[:administrator]
   end

@@ -15,7 +15,7 @@
 //= require bootstrap
 //= require_tree .
 $( document ).ready(function() {
-    if ($('#flash_notice').text() == "Invalid credentials")
+    if ($('#flash_notice').text() == "Invalid credentials" || $('#flash_notice').text() == "Password Mismatch.")
         $('#flash_notice').css({ "color": "red"})
     else
         $('#flash_notice').css({ "color": "green"})
