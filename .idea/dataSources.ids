@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
-  <data-source source="LOCAL" name="Rails LOG210: development" product="SQLite" version="3.7.6.3" jdbc-version="2.1" driver-name="SQLiteJDBC" driver-version="native" uuid="05de7a9f-c590-43f1-9022-3015fd95b6b7">
+  <data-source source="LOCAL" name="Rails LOG210: production" product="" version="" jdbc-version="" driver-name="" driver-version="" uuid="0392ab29-1753-4a17-9cc5-5783ade00678">
+    <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+    <jdbc-url>jdbc:postgresql://127.0.0.1/mexicanexpressdb</jdbc-url>
+    <user-name>postgres</user-name>
+    <user-password>dfdadfc5dfd9dfdedfcddfd8dfcfdfd9</user-password>
+    <libraries>
+      <library>
+        <url>file://$USER_HOME$/.RubyMine50/config/jdbc-drivers/postgresql-driver-license.txt</url>
+      </library>
+      <library>
+        <url>jar://$USER_HOME$/.RubyMine50/config/jdbc-drivers/postgresql-9.3-1100.jdbc4.jar!/</url>
+      </library>
+    </libraries>
+  </data-source>
+  <data-source source="LOCAL" name="Rails LOG210: test" product="" version="" jdbc-version="" driver-name="" driver-version="" uuid="99fcc2fe-84f3-4eaf-a694-a23983d0b6ac">
+    <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+    <jdbc-url>jdbc:postgresql:db/test.sqlite3</jdbc-url>
+    <libraries>
+      <library>
+        <url>file://$USER_HOME$/.RubyMine50/config/jdbc-drivers/postgresql-driver-license.txt</url>
+      </library>
+      <library>
+        <url>file://$USER_HOME$/.RubyMine50/config/jdbc-drivers/postgresql-9.3-1100.jdbc4.jar</url>
+      </library>
+    </libraries>
+  </data-source>
+  <data-source source="LOCAL" name="Rails LOG210: development" product="SQLite" version="3.7.6.3" jdbc-version="2.1" driver-name="SQLiteJDBC" driver-version="native" uuid="b3a423a5-2dcd-478b-8bf9-44bf57fb1da9">
     <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
     <jdbc-url>jdbc:sqlite:C:\Users\Anthony\RubymineProjects\LOG210_v2\LOG210\db\development.sqlite3</jdbc-url>
     <libraries>
@@ -99,19 +125,5 @@
       <column name="name" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
       <column name="seq" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
     </table>
-  </data-source>
-  <data-source source="LOCAL" name="Rails LOG210: production" product="" version="" jdbc-version="" driver-name="" driver-version="" uuid="0392ab29-1753-4a17-9cc5-5783ade00678">
-    <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-    <jdbc-url>jdbc:postgresql://127.0.0.1/mexicanexpressdb</jdbc-url>
-    <user-name>postgres</user-name>
-    <user-password>dfdadfc5dfd9dfdedfcddfd8dfcfdfd9</user-password>
-    <libraries>
-      <library>
-        <url>file://$USER_HOME$/.RubyMine50/config/jdbc-drivers/postgresql-driver-license.txt</url>
-      </library>
-      <library>
-        <url>jar://$USER_HOME$/.RubyMine50/config/jdbc-drivers/postgresql-9.3-1100.jdbc4.jar!/</url>
-      </library>
-    </libraries>
   </data-source>
 </component>
