@@ -43,34 +43,13 @@ class EntrepreneursController < ApplicationController
     @entrepreneur = Entrepreneur.new(params[:entrepreneur])
     @entrepreneur.setAsEntrepreneur
 
-    #valide si l'adresse email donnée existe déjà dans la BD
-    if(Entrepreneur.find_all_by_emailAddress(@entrepreneur.emailAddress).empty?)
-
-      #valide si le password équivaut à la confirmation du password
-      if @entrepreneur.password.to_s() == @entrepreneur.password_confirmation.to_s()
-
-        #hashage du password
-        @entrepreneur.password = @entrepreneur.encrypt_password
-
-        respond_to do |format|
-          if @entrepreneur.save
-            format.html { redirect_to @entrepreneur, notice: 'Entrepreneur was successfully created.' }
-            format.json { render json: @entrepreneur, status: :created, location: @entrepreneur }
-          else
-            format.html { render action: "new" }
-            format.json { render json: @entrepreneur.errors, status: :unprocessable_entity }
-          end
-        end
+    respond_to do |format|
+      if @entrepreneur.save
+        format.html { redirect_to @entrepreneur, notice: 'Entrepreneur was successfully created.' }
+        format.json { render json: @entrepreneur, status: :created, location: @entrepreneur }
       else
-        respond_to do |format|
-          format.html { redirect_to new_entrepreneur_url, notice: 'Password Mismatch.' }
-          format.json { render json: @entrepreneur, status: :precondition_failed, location: @entrepreneur }
-        end
-      end
-    else
-      respond_to do |format|
-        format.html { redirect_to new_entrepreneur_url, notice: 'Email address already used by another user.' }
-        format.json { render json: @entrepreneur, status: :precondition_failed, location: @entrepreneur }
+        format.html { render action: "new" }
+        format.json { render json: @entrepreneur.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -79,16 +58,6 @@ class EntrepreneursController < ApplicationController
   # PUT /entrepreneurs/1.json
   def update
     @entrepreneur = Entrepreneur.find(params[:id])
-    temp_entrepreneur = Entrepreneur.new(params[:entrepreneur])
-
-    if (temp_entrepreneur.linkedRestaurant != '')
-      @restaurant = Restaurant.find(temp_entrepreneur.linkedRestaurant)
-
-      if(@restaurant != nil)
-        @restaurant.update_attribute(:entrepreneur_id, @entrepreneur.id)
-
-      end
-    end
 
     respond_to do |format|
       if @entrepreneur.update_attributes(params[:entrepreneur])

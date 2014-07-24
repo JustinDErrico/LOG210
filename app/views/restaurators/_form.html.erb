@@ -19,7 +19,7 @@
     </div>
     <div class="form-group">
       <%= f.label :dateOfBirth, 'Date de naissance'%><br />
-      <%= f.date_select :dateOfBirth %>
+      <%= f.date_select :dateOfBirth, start_year: 1900 %>
     </div>
     <div class="form-group">
       <%= f.label :phoneNumber, 'Numéro de téléphone' %><br />
@@ -48,13 +48,12 @@
     <div>
       <%= f.label :linkedRestaurant, 'Restaurant assigné' %><br />
       <% @restaurants.each do |restaurant|
-          checked = false
+        checked = false
 
-          if restaurant.restaurator_id == @restaurator.id
-            checked = true
-          end%>
-          <%= f.check_box(:linkedRestaurant,{:checked=>checked}, restaurant.id) %>
-          <%= f.label :restaurant_id, restaurant.name %>
+        if restaurant.restaurator_id == @restaurator.id
+          checked = true
+        end%>
+          <div><input value="<%= restaurant.id %>" id="<%= restaurant.id %>" name="checkedRestaurants[]" type="checkbox" <% if (checked && @restaurator.id != nil) %> <%= "checked" %> <%end%> <% if (restaurant.restaurator_id != nil && restaurant.restaurator_id != @restaurator.id) %> <%= "disabled" %> <%end%>><label for="<%= restaurant.name %>"><%= restaurant.name %></label></div>
           <br />
       <% end %>
     </div>

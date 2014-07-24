@@ -48,65 +48,35 @@ class ClientsController < ApplicationController
     @client = Client.new(params[:client])
     @client.setAsVisitor
     #valide si l'adresse email donnée existe déjà dans la BD
-    if(Client.find_all_by_emailAddress(@client.emailAddress).empty?)
 
-      #valide si le password équivaut à la confirmation du password
-      if @client.password.to_s() == @client.password_confirmation.to_s()
+    respond_to do |format|
+      #si la sauvegarde des informations dans la BD fonctionne
+      if @client.save
 
-        #hashage du password
-        @client.password = @client.encrypt_password
+        session[:client_type] = @client.clientType
+        session[:client_id] = @client.id
 
-        respond_to do |format|
-          #si la sauvegarde des informations dans la BD fonctionne
-          if @client.save
-
-            session[:client_type] = @client.clientType
-            session[:client_id] = @client.id
-
-            format.html { redirect_to @client, notice: 'Client was successfully created.' }
-            format.json { render json: @client, status: :created, location: @client }
-          else
-            format.html { render action: "new" }
-            format.json { render json: @client.errors, status: :unprocessable_entity }
-          end
-        end
+        format.html { redirect_to @client, notice: 'Client was successfully created.' }
+        format.json { render json: @client, status: :created, location: @client }
       else
-        respond_to do |format|
-          format.html { redirect_to new_client_url, notice: 'Password Mismatch.' }
-          format.json { render json: @client, status: :precondition_failed, location: @client }
-        end
-      end
-    else
-      respond_to do |format|
-        format.html { redirect_to new_client_url, notice: 'Email address already used by another user.' }
-        format.json { render json: @client, status: :precondition_failed, location: @client }
+        format.html { render action: "new" }
+        format.json { render json: @client.errors, status: :unprocessable_entity }
       end
     end
   end
+
 
   # PUT /clients/1
   # PUT /clients/1.json
   def update
     @client = Client.find(params[:id])
-    temp_client = Client.new(params[:client])
 
     respond_to do |format|
-      if temp_client.password.to_s == temp_client.password_confirmation.to_s
-        temp_client.password = Digest::SHA1.hexdigest(temp_client.password)
-
-        if @client.update_attributes(params[:client])
-
-          if @client.update_attribute(:password, temp_client.password)
-            format.html { redirect_to @client, notice: 'Client was successfully updated.' }
-            format.json { head :no_content }
-          else
-            format.html { render action: "edit" }
-            format.json { render json: @client.errors, status: :unprocessable_entity }
-          end
-        end
-
+    if @client.update_attributes(params[:client])
+        format.html { redirect_to @client, notice: 'Client was successfully updated.' }
+        format.json { head :no_content }
       else
-        format.html { redirect_to '/clients/' + @client.id.to_s + '/edit', notice: 'Password mismatch.' }
+        format.html { render action: "edit" }
         format.json { render json: @client.errors, status: :unprocessable_entity }
       end
     end

@@ -43,58 +43,36 @@ class RestauratorsController < ApplicationController
     @restaurator = Restaurator.new(params[:restaurator])
     @restaurator.setAsRestaurator
 
-    @restaurant_ids = Array.new
-    restaurants_id_count = 0
-    #valide si l'adresse email donnée existe déjà dans la BD
-    if(Restaurator.find_all_by_emailAddress(@restaurator.emailAddress).empty?)
+    @restaurant_ids = params[:checkedRestaurants]
+    @restaurator.linkedRestaurant = 0
 
-      #valide si le password équivaut à la confirmation du password
-      if @restaurator.password.to_s() == @restaurator.password_confirmation.to_s()
+    if (!@restaurant_ids.nil?)
+      @restaurator.linkedRestaurant = @restaurant_ids.count
+    end
 
-        #hashage du password
-        @restaurator.password = @restaurator.encrypt_password
+    #nombre de restaurants liés au restaurateur
+    @restaurator.linkedRestaurant = restaurants_id_count
 
-        #sauvegarde des id des restaurants
-        @restaurator.linkedRestaurant.each do |checkedRestaurant|
-          if (checkedRestaurant != '0')
-            @restaurant_ids.push(checkedRestaurant)
-            restaurants_id_count = restaurants_id_count + 1
-          end
-        end
+    respond_to do |format|
+      if @restaurator.save
 
-        #nombre de restaurants liés au restaurateur
-        @restaurator.linkedRestaurant = restaurants_id_count
+        #assignation des restaurants
+        if (!@restaurant_ids.nil?)
+          @restaurant_ids.each do |checkedRestaurant|
 
-        respond_to do |format|
-          if @restaurator.save
+            @restaurant = Restaurant.find(checkedRestaurant)
 
-            #assignation des restaurants
-            @restaurant_ids.each do |checkedRestaurant|
-
-              @restaurant = Restaurant.find(checkedRestaurant)
-
-              if(@restaurant != nil)
-                @restaurant.update_attribute(:restaurator_id, @restaurator.id)
-              end
+            if(@restaurant != nil)
+              @restaurant.update_attribute(:restaurator_id, @restaurator.id)
             end
-
-            format.html { redirect_to @restaurator, notice: 'Restaurator was successfully created.' }
-            format.json { render json: @restaurator, status: :created, location: @restaurator }
-          else
-            format.html { render action: "new" }
-            format.json { render json: @restaurator.errors, status: :unprocessable_entity }
           end
         end
+
+        format.html { redirect_to @restaurator, notice: 'Restaurator was successfully created.' }
+        format.json { render json: @restaurator, status: :created, location: @restaurator }
       else
-        respond_to do |format|
-          format.html { redirect_to new_restaurator_url, notice: 'Password Mismatch.' }
-          format.json { render json: @restaurator, status: :precondition_failed, location: @restaurator }
-        end
-      end
-    else
-      respond_to do |format|
-        format.html { redirect_to new_restaurator_url, notice: 'Email address already used by another user.' }
-        format.json { render json: @restaurator, status: :precondition_failed, location: @restaurator }
+        format.html { render action: "new" }
+        format.json { render json: @restaurator.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -104,18 +82,36 @@ class RestauratorsController < ApplicationController
   def update
     @restaurator = Restaurator.find(params[:id])
     temp_restaurator = Restaurator.new(params[:restaurator])
+    @restaurant_ids = params[:checkedRestaurants]
+    restaurants_id_count = 0
 
-    if (temp_restaurator.linkedRestaurant != '')
-      @restaurant = Restaurant.find(temp_restaurator.linkedRestaurant)
-
-      if(@restaurant != nil)
-        @restaurant.update_attribute(:restaurator_id, @restaurator.id)
-
-      end
-    end
+    #nombre de restaurants liés au restaurateur
+    temp_restaurator.linkedRestaurant = restaurants_id_count
 
     respond_to do |format|
       if @restaurator.update_attributes(params[:restaurator])
+
+        if (!@restaurant_ids.nil?)
+
+          #désassignation de tout les restaurants qui sont assigné a ce restaurateur (clean start)
+          Restaurant.all.each do |restaurant|
+            if(restaurant.restaurator_id == @restaurator.id)
+              restaurant.update_attribute(:restaurator_id, '')
+            end
+          end
+
+          #assignation des restaurants
+          @restaurant_ids.each do |checkedRestaurant|
+
+            @restaurant = Restaurant.find(checkedRestaurant)
+
+            if(@restaurant != nil)
+              @restaurant.update_attribute(:restaurator_id, @restaurator.id)
+            end
+          end
+
+        end
+
         format.html { redirect_to @restaurator, notice: 'Restaurator was successfully updated.' }
         format.json { head :no_content }
       else

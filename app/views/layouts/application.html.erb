@@ -33,6 +33,7 @@
 					<% if current_user %>
 						<% if current_user[:clientType] == Client::CLIENT_TYPES[:administrator] %>
 							<li><%= link_to 'Clients', clients_path %></li>
+                          <li><%= link_to 'Entrepreneurs', entrepreneurs_path %></li>
                             <li><%= link_to 'Restaurants', restaurants_path %></li>
 							<li><%= link_to 'Menus', menus_path %></li>
                             <li><%= link_to 'Commandes', commandes_path %></li>
