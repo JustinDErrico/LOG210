@@ -41,16 +41,17 @@ class MenusController < ApplicationController
   # POST /menus.json
   def create
     @menu = Menu.new(params[:menu])
+    restaurant_assigned = true
 
     if current_user[:clientType] == Client::CLIENT_TYPES[:restaurator] || current_user[:clientType] == Client::CLIENT_TYPES[:administrator]
-      @restaurant = Restaurant.find(@menu.restaurant_id)
-      if @restaurant != nil
-        @menu.restaurant_id = @restaurant.id
+      if (@menu.restaurant_id == nil)
+        restaurant_assigned = false
       end
+
     end
 
-    if !@menu[:name] != ''
-      respond_to do |format|
+    respond_to do |format|
+      if (restaurant_assigned)
         if @menu.save
           format.html { redirect_to @menu, notice: 'Menu was successfully created.' }
           format.json { render json: @menu, status: :created, location: @menu }
@@ -58,11 +59,9 @@ class MenusController < ApplicationController
           format.html { render action: "new" }
           format.json { render json: @menu.errors, status: :unprocessable_entity }
         end
-      end
-    else
-      respond_to do |format|
-        format.html { redirect_to new_menu_url, notice: 'Name cannot be empty.' }
-        format.json { render json: @menu, status: :precondition_failed, location: @menu }
+      else
+        format.html { redirect_to new_menu_path, notice: 'No restaurant is assigned.' }
+        format.json { render json: @menu, status: :created, location: @menu }
       end
     end
   end
@@ -72,13 +71,25 @@ class MenusController < ApplicationController
   def update
     @menu = Menu.find(params[:id])
 
+    restaurant_assigned = true
+
+    if (@menu.restaurant_id == nil)
+      restaurant_assigned = false
+    end
+
     respond_to do |format|
-      if @menu.update_attributes(params[:menu])
-        format.html { redirect_to @menu, notice: 'Menu was successfully updated.' }
-        format.json { head :no_content }
+
+      if (restaurant_assigned)
+        if @menu.update_attributes(params[:menu])
+          format.html { redirect_to @menu, notice: 'Menu was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: "edit" }
+          format.json { render json: @menu.errors, status: :unprocessable_entity }
+        end
       else
-        format.html { render action: "edit" }
-        format.json { render json: @menu.errors, status: :unprocessable_entity }
+        format.html { redirect_to edit_menu_path, notice: 'No restaurant is assigned.' }
+        format.json { render json: @menu, status: :created, location: @menu }
       end
     end
   end
