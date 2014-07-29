@@ -1,0 +1,24 @@
+<%
+  @restaurant = Restaurant.find(restaurant_id)
+  @menus = Menu.find(:all, :conditions => { :restaurant_id => restaurant_id })
+%>
+
+<% @menus.each do |m| %>
+<div class="panel panel-default">
+  <div class="panel-heading"><strong><%= m.nom %></strong></div>
+    <div class="panel-body">
+      <% @plats = Plat.find(:all, :conditions => { :menu_id => m.id }) %>
+      <% @plats.each do |p| %>
+        <span><%= p.nom %> (<%= p.prix %>$)</span>
+          <div class="fields">
+            <div class="field">
+              <% produit = Produit.new %>
+              <%= label_tag 'quantity', 'Quantité' %><br />
+              <%= number_field_tag "produits[#{produit.object_id}][quantity]" %>
+              <%= hidden_field_tag "produits[#{produit.object_id}][plat_id]", p.id %>
+            </div>
+          </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

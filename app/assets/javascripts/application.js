@@ -15,10 +15,14 @@
 //= require bootstrap
 //= require_tree .
 $( document ).ready(function() {
-    if ($('#flash_notice').text() == "Invalid credentials" || $('#flash_notice').text() == "Password Mismatch.")
-        $('#flash_notice').css({ "color": "red"})
-    else
-        $('#flash_notice').css({ "color": "green"})
+  if ($('#flash_notice').text() == "Invalid credentials" || $('#flash_notice').text() == "Password Mismatch.")
+      $('#flash_notice').css({ "color": "red"})
+  else
+      $('#flash_notice').css({ "color": "green"})
+
+  $('#commande_restaurant_id').change(function(){
+		get_menu();
+	});
 });
 function remove_fields(link)
 {
@@ -33,4 +37,28 @@ function add_fields(link, association, content)
 
     $(link).before(content.replace(regexp, new_id));
 }
-$
+
+function get_menu()
+{
+    $.ajax({
+     	url: "/get_menus",
+	    type: "GET",
+	    data: 
+	    {
+	    	id: $('#commande_restaurant_id option:selected').val() 
+	    },
+  	 	complete: function(response, status) 
+      {
+        $('#commande').html(response.responseText);
+
+        if(response.responseText.trim())
+        {
+          $('input[type=submit]').show();
+        }
+        else
+        {
+          $('input[type=submit]').hide();
+        }
+      }
+    });
+}

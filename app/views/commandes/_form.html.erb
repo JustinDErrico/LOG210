@@ -20,7 +20,8 @@
     <%= f.collection_select :restaurant_id, @restaurants,:id, :name, :action => 'show', :prompt => 'Choisissez un restaurant' %>
   </div>
 
-    <div class="actions">
-      <%= f.submit 'Choisir', :class=>'btn btn-primary' %>
-    </div>
+  <%= form_tag "/commande" do %>
+      <div id="commande" class="form-group"></div>
+    <%= submit_tag "Submit", class: "btn btn-primary" %>
+  <% end %>
 <% end %>

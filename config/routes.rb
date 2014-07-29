@@ -1,7 +1,6 @@
 LOG210::Application.routes.draw do
   resources :produits
 
-
   resources :commandes do
     collection do
       get :choisir_produits
@@ -9,9 +8,7 @@ LOG210::Application.routes.draw do
     end
   end
 
-
   resources :menus
-
 
   resources :plats
 
@@ -24,6 +21,7 @@ LOG210::Application.routes.draw do
 
   resources :restaurants
   get "restaurants/index"
+  get '/get_menus' => 'commandes#get_menus'
 
   resources :restaurators
   get "restaurators/index"

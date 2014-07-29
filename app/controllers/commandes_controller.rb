@@ -40,12 +40,30 @@ class CommandesController < ApplicationController
   # POST /commandes
   # POST /commandes.json
   def create
+    valid = true
     @commande = Commande.new(params[:commande])
 
-    if !@commande.restaurant_id.nil?
-      redirect_to :controller => 'produits', :action => 'new', :restaurant_id => @commande.restaurant_id
-    else
-      redirect_to new_commande_path, notice: 'Veuillez choisir un restaurant.'
+    if (current_user.clientType == Client::CLIENT_TYPES[:visitor])
+      @commande.client_id = current_user.id
+    end
+    
+    if @commande.save
+      params['produits'].each do |p|
+        @produit = Produit.new(commande_id: @commande.id, plat_id: p[1][:plat_id], quantity: p[1][:quantity])
+
+        if !@produit.save
+          puts "produit--------" + @produit.to_yaml
+          valid = false
+        end
+      end
+    end
+
+    respond_to do |format|
+      if valid
+        format.html { redirect_to @commande, notice: 'Commande was successfully added.' }
+      else
+        format.html { render action: "new", notice: 'Erreur' }
+      end
     end
   end
 
@@ -74,6 +92,12 @@ class CommandesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to commandes_url }
       format.json { head :no_content }
+    end
+  end
+
+  def get_menus
+    respond_to do |format|
+      format.js { render :partial => 'commandes/passer_commande', :locals => { :restaurant_id => params[:id] } }
     end
   end
 end
