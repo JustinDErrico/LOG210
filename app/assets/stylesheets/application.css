@@ -110,7 +110,7 @@ only screen and (max-width: 992px),
     .commande td:nth-of-type(3):before { content: "Prix total :    "; }
     .commande td:nth-of-type(4):before { content: "Date de livraison :    "; }
     .commande td:nth-of-type(5):before { content: "Adresse de livraison :    "; }
-
+     .commande th {display: none;}
 
     td > a
     {
