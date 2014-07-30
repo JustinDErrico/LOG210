@@ -1,7 +1,7 @@
 require 'digest/sha1'
 
 class ClientsController < ApplicationController
-
+skip_before_filter :require_login, :only => [:create,:new]
   # GET /clients
   # GET /clients.json
 
