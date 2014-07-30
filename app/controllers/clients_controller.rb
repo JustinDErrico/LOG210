@@ -84,6 +84,7 @@ class ClientsController < ApplicationController
 
     @AddressList = ClientAddress.find_all_by_client_id(current_user.id)
     @SortedAddressList = @AddressList.sort_by {|a| a.created_at}
+    @SortedAddressList = @SortedAddressList.reverse!
     count = 0
 
     @SortedAddressList.each do |address|
