@@ -44,8 +44,6 @@ class MenusController < ApplicationController
 
     notice = 'Menu was successfully created.'
 
-    puts "plats_attributes------" + params[:plats_attributes].to_yaml
-
     params.each do |key, value| 
       if key.to_s == 'description'
         if param[key].blank?

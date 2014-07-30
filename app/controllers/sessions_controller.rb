@@ -6,7 +6,7 @@ end
 #Source:
 #http://stackoverflow.com/questions/5056451/redirect-to-login-page-if-user-not-logged-in
 #################################################################################
-  skip_before_filter :require_login
+  before_filter :require_login, :except => [:create,:new]
   def create
     client = Client.authenticate(params[:email], params[:password])
     if client
