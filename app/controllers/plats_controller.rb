@@ -44,7 +44,7 @@ class PlatsController < ApplicationController
 
     respond_to do |format|
       if @plat.save
-        format.html { redirect_to @plat, notice: 'Plat was successfully created.' }
+        format.html { redirect_to @plat, notice: notice }
         format.json { render json: @plat, status: :created, location: @plat }
       else
         format.html { render action: "new" }

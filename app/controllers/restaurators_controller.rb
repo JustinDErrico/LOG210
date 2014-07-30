@@ -51,7 +51,7 @@ class RestauratorsController < ApplicationController
     if (!@restaurant_ids.nil?)
       @restaurator.linkedRestaurant = @restaurant_ids.count
     else
-      notice = 'Vous avez ajouté un restaurateur dans lui assigner un restaurant.'
+      notice = 'Vous avez ajouté un restaurateur sans lui assigner un restaurant.'
     end
 
     #nombre de restaurants liés au restaurateur
@@ -117,7 +117,7 @@ class RestauratorsController < ApplicationController
           end
 
         else
-          notice = 'Vous avez modifié un restaurateur dans lui assigner un restaurant.'
+          notice = 'Vous avez modifié un restaurateur sans lui assigner un restaurant.'
         end
 
         format.html { redirect_to @restaurator, notice: notice }
