@@ -1,4 +1,7 @@
 LOG210::Application.routes.draw do
+  resources :client_addresses
+
+
   resources :produits
 
   resources :commandes

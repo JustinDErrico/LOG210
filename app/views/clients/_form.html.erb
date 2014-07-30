@@ -23,10 +23,33 @@
     <%= f.label :phoneNumber, 'Numéro de téléphone' %><br />
     <%= f.text_field :phoneNumber, :class=>'form-control', :placeholder=>'Entrez le numéro de téléphone' %>
   </div>
-  <div class="form-group">
-    <%= f.label :address, 'Adresse' %><br />
-    <%= f.text_field :address, :class=>'form-control', :placeholder=>'Entrez l\'adresse' %>
-  </div>
+
+<%
+   if (session[:client_id] != nil)
+     @AddressList = ClientAddress.find_all_by_client_id(current_user.id)
+     @SortedAddressList = @AddressList.sort_by {|a| a.created_at}
+   end
+
+   counter = 1
+%>
+
+<% if (session[:client_id] != nil) %>
+
+  <% @SortedAddressList.each do |address| %>
+      <label> <%='Adresse ' + counter.to_s %> </label>
+      <div class="form-group">
+      <input class="form-control" pattern=".{2,}" required title="2 characters minimum" value="<%=address.address %>" name="addresses[]" type="text">
+      </div>
+  <% counter = counter + 1%>
+  <% end %>
+
+<% else %>
+        <label> <%='Adresse' %> </label> <br />
+        <div class="form-group">
+              <input class="form-control" pattern=".{2,}" required title="2 characters minimum" name="addresses[]" type="text"  placeholder="Entrez l'adresse">
+        </div>
+<% end%>
+
   <div class="form-group">
     <%= f.label :zipCode, 'Code postal' %><br />
     <%= f.text_field :zipCode, :class=>'form-control', :placeholder=>'Entrez le code postal' %>
