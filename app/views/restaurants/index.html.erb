@@ -42,7 +42,6 @@
                 <%else %>
                     <td></td>
                 <%end %>
-                <td><%= link_to 'Détails', restaurant %></td>
                 <td><%= link_to 'Modifier', edit_restaurant_path(restaurant) %></td>
                 <td><%= link_to 'Supprimer', restaurant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
               </tr>

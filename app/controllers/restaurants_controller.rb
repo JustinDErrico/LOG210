@@ -46,7 +46,7 @@ class RestaurantsController < ApplicationController
     if (@restaurant.linkedRestaurator != '')
       @restaurant.restaurator_id = @restaurant.linkedRestaurator
     else
-      notice = 'Vous avez ajouté un restaurant sans lui assigner un restaurateur.'
+      notice = 'Vous avez ajoute un restaurant sans lui assigner un restaurateur.'
     end
 
     if (current_user.clientType == Client::CLIENT_TYPES[:entrepreneur])
@@ -75,7 +75,7 @@ class RestaurantsController < ApplicationController
     if (temp_restaurant.linkedRestaurator != '')
       @restaurant.restaurator_id = temp_restaurant.linkedRestaurator
     else
-      notice = 'Vous avez modifié un restaurant sans lui assigner un restaurateur.'
+      notice = 'Vous avez modifie un restaurant sans lui assigner un restaurateur.'
     end
 
     if (current_user.clientType == Client::CLIENT_TYPES[:entrepreneur])
