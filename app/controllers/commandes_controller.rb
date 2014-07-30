@@ -45,14 +45,18 @@ class CommandesController < ApplicationController
 
     if (current_user.clientType == Client::CLIENT_TYPES[:visitor])
       @commande.client_id = current_user.id
+      @commande.deliveryAddress = current_user.address
     end
     
     if @commande.save
       params['produits'].each do |p|
-        @produit = Produit.new(commande_id: @commande.id, plat_id: p[1][:plat_id], quantity: p[1][:quantity])
+        if p[1][:quantity].to_f > 0
 
-        if !@produit.save
-          valid = false
+          @produit = Produit.new(commande_id: @commande.id, plat_id: p[1][:plat_id], quantity: p[1][:quantity])
+
+          if !@produit.save
+            valid = false
+          end
         end
       end
     end
@@ -103,6 +107,9 @@ class CommandesController < ApplicationController
   def confirmer
     @commande = Commande.find(params[:id])
     no_confirmation = Digest::SHA1.hexdigest([Time.now, rand].join)
+
+    puts "time------" + params[:deliveryTime].to_yaml
+    puts "adresse------" + params[:deliveryAddress].to_yaml
 
     respond_to do |format|
       if @commande.update_attributes(:deliveryTime => params[:deliveryTime], :deliveryAddress => params[:deliveryAddress])

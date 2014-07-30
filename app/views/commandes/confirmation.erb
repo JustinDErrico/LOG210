@@ -1,22 +1,26 @@
-<% @produits = Produit.find(:all, :conditions => { :commande_id => @commande.id }) %>
+<%
+  @produits = Produit.find(:all, :conditions => { :commande_id => @commande.id })
+%>
 <p>
-	<b>Client:</b>
-	<%= @commande.client_id %>
 	<ul>
+		<li><strong>Restaurant:</strong> <%= Restaurant.find(@commande.restaurant_id).name %></li>
+		<li><strong>Adresse de livraison:</strong> <%= @commande.deliveryAddress %></li>
+		<li><strong>Produits</strong></li>
+		<ul>
   		<% @produits.each do |produit| %>
   			<li>
 				<% @plat = Plat.find(produit.plat_id) %>
 				<span><%= @plat.nom %> (<%= @plat.prix %>) x <%= produit.quantity %></span>
 			</li>
 		<% end %>
+		</ul>
 	</ul>
 </p>
-<p>
 <%= form_tag('/commandes/confirmer', method: 'post') do %>	
 	<div class="fields">
         <div class="field">
 			<%= label_tag 'deliveryTime', 'Date de livraison' %><br />
-			<%= text_field_tag 'deliveryTime' %>
+			<%= text_field_tag 'deliveryTime', DateTime.now.to_date %>
 		</div>
 		<div class="field">
 			<%= label_tag 'deliveryAddress', 'Adresse de livraison' %><br />
