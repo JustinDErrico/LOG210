@@ -49,9 +49,20 @@ class ClientsController < ApplicationController
     @client.setAsVisitor
     #valide si l'adresse email donnée existe déjà dans la BD
 
+     if (session[:client_id] == nil)
+       @client.address = params[:addresses][0]
+     end
+
     respond_to do |format|
       #si la sauvegarde des informations dans la BD fonctionne
       if @client.save
+
+        if (session[:client_id] == nil)
+          @newAddress = ClientAddress.new
+          @newAddress.address = params[:addresses][0]
+          @newAddress.client_id = @client.id
+          @newAddress.save
+        end
 
         session[:client_type] = @client.clientType
         session[:client_id] = @client.id
@@ -71,8 +82,19 @@ class ClientsController < ApplicationController
   def update
     @client = Client.find(params[:id])
 
+    @AddressList = ClientAddress.find_all_by_client_id(current_user.id)
+    @SortedAddressList = @AddressList.sort_by {|a| a.created_at}
+    count = 0
+
+    @SortedAddressList.each do |address|
+      address.update_attribute(:address, params[:addresses][count].to_s)
+      count = count + 1
+    end
     respond_to do |format|
     if @client.update_attributes(params[:client])
+
+        @client.update_attribute(:address, params[:addresses][0].to_s)
+
         format.html { redirect_to @client, notice: 'Client was successfully updated.' }
         format.json { head :no_content }
       else

@@ -7,10 +7,15 @@ class Client < ActiveRecord::Base
   attr_accessible :address, :dateOfBirth, :emailAddress, :name, :password, :phoneNumber, :password_confirmation, :clientType, :zipCode
   attr_accessor :password_confirmation
 
-  before_save :encrypt_password_before_safe
+  before_create :encrypt_password_before_create
+  before_update :encrypt_password_before_update
 
-  def encrypt_password_before_safe
-    if self.password != ''
+  def encrypt_password_before_create
+    self.password = Digest::SHA1.hexdigest(self.password)
+  end
+
+  def encrypt_password_before_update
+    if self.password.length <= 12
       self.password = Digest::SHA1.hexdigest(self.password)
     end
   end
@@ -25,8 +30,8 @@ class Client < ActiveRecord::Base
     validates :zipCode, :presence => true, :format => { :with => zip_regex_canada }
     validates :phoneNumber, format: { with: /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/ }
     validates :emailAddress, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i }
-    validates :password, length: { minimum: 2 }
-    validates :password_confirmation, length: { minimum: 2 }
+    validates :password, length: { minimum: 2, maximum: 12  }
+    validates :password_confirmation, length: { minimum: 2, maximum: 12 }
    #Fin validation du formulaire
 
   def setAsAdmin
@@ -61,7 +66,7 @@ class Client < ActiveRecord::Base
 
   def self.authenticate(email, password)
     client = find_by_emailAddress(email)
-    if client && client.password ==Digest::SHA1.hexdigest(password)
+    if client && client.password == Digest::SHA1.hexdigest(password)
       client
     else
       nil

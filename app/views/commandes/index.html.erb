@@ -3,19 +3,7 @@
 <h1>Commandes</h1>
 
 <table class="table table-striped">
-  <tr>
-    <% if current_user.clientType == Client::CLIENT_TYPES[:administrator]%>
-        <th>Client</th>
-    <% end %>
-    <th>Restaurant</th>
-    <th>Quantité de produits</th>
-    <th>Prix total</th>
-    <th>Date de livraison</th>
-    <th>Adresse de livraison</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+
 
 <% @commandes.each do |commande| %>
 <% canview = true
@@ -24,8 +12,19 @@
      canview = false
    end
 %>
-<% if canview
+<% if canview %>
 
+     <tr>
+     <% if current_user.clientType == Client::CLIENT_TYPES[:administrator]%>
+              <th>Client</th>
+          <% end %>
+          <th>Restaurant</th>
+          <th>Quantité de produits</th>
+          <th>Prix total</th>
+          <th>Date de livraison</th>
+          <th>Adresse de livraison</th>
+          </tr>
+    <%
     totalPrice = 0
     produits = Produit.find_all_by_commande_id(commande.id)
 
@@ -37,13 +36,16 @@
     <% if current_user.clientType == Client::CLIENT_TYPES[:administrator]%>
       <td><%= Client.find(commande.client_id).emailAddress %></td>
     <% end %>
-    <td><%= Restaurant.find(commande.restaurant_id).name %></td>
+    <td><%= if (commande.restaurant_id != nil)
+              Restaurant.find(commande.restaurant_id).name
+            end
+         %>
+    </td>
     <td><%= produits.count %></td>
     <td><%= totalPrice %></td>
     <td><%= commande.deliveryTime %></td>
     <td><%= commande.deliveryAddress %></td>
 
-    <td><%= link_to 'Détails', commande %></td>
     <td><%= link_to 'Modifier', edit_commande_path(commande) %></td>
     <td><%= link_to 'Supprimer', commande, method: :delete, data: { confirm: 'Êtes-vous certain?' } %></td>
     </tr>

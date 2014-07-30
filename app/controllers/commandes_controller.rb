@@ -108,12 +108,23 @@ class CommandesController < ApplicationController
     @commande = Commande.find(params[:id])
     no_confirmation = Digest::SHA1.hexdigest([Time.now, rand].join)
 
-    puts "time------" + params[:deliveryTime].to_yaml
-    puts "adresse------" + params[:deliveryAddress].to_yaml
+    finalAddress = params[:SelectedAddress]
+
+    if (params[:NewAddress] != '')
+      finalAddress = params[:NewAddress]
+
+      @NewClientAddress = ClientAddress.new
+      @NewClientAddress.address = finalAddress
+      @NewClientAddress.client_id = current_user.id
+      @NewClientAddress.save
+
+      Client.find(current_user.id).update_attribute(:address, finalAddress)
+    end
 
     respond_to do |format|
-      if @commande.update_attributes(:deliveryTime => params[:deliveryTime], :deliveryAddress => params[:deliveryAddress])
-        format.html { redirect_to @commande, notice: 'Commande was successfully updated. Numéro de confirmation: '+ no_confirmation}
+      dateformat = "%d/%m/%Y %H:%M"
+      if @commande.update_attributes(:deliveryTime => DateTime.strptime(params[:deliveryTime], dateformat), :deliveryAddress => finalAddress)
+        format.html { redirect_to @commande, notice: 'Commande was successfully updated. Numero de confirmation: '+ no_confirmation}
         format.json { head :no_content }
       end
     end

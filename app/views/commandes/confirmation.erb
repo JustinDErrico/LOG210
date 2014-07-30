@@ -1,7 +1,11 @@
-<%
-  @produits = Produit.find(:all, :conditions => { :commande_id => @commande.id })
+<% @produits = Produit.find(:all, :conditions => { :commande_id => @commande.id })
+   @AddressList = ClientAddress.find_all_by_client_id(current_user.id)
+   @SortedAddressList = @AddressList.sort_by {|a| a.created_at }
 %>
+
 <p>
+	<b>Client:</b>
+	<%= Client.find(@commande.client_id).name %>
 	<ul>
 		<li><strong>Restaurant:</strong> <%= Restaurant.find(@commande.restaurant_id).name %></li>
 		<li><strong>Adresse de livraison:</strong> <%= @commande.deliveryAddress %></li>
@@ -19,13 +23,26 @@
 <%= form_tag('/commandes/confirmer', method: 'post') do %>	
 	<div class="fields">
         <div class="field">
-			<%= label_tag 'deliveryTime', 'Date de livraison' %><br />
-			<%= text_field_tag 'deliveryTime', DateTime.now.to_date %>
+          <label> Date/heure de livraison </label><br />
+          <input type="datetime" name="deliveryTime" value="<%=Time.now.strftime("%d/%m/%Y %H:%M")%>">
 		</div>
-		<div class="field">
-			<%= label_tag 'deliveryAddress', 'Adresse de livraison' %><br />
-			<%= text_field_tag 'deliveryAddress' %>
-		</div>
+      <div class="fields">
+        <label> Adresse de livraison </label><br />
+        <select name="SelectedAddress">
+          <%
+             count = 1
+             @SortedAddressList.each do |address|  %>
+               <option value="<%=address.address%>"><%= address.address %></option>
+
+             <% count = count + 1
+                end %>
+          %>
+        </select>
+      </div>
+
+      <label> Nouvelle adresse? </label><br />
+        <input name="NewAddress" type="text">
+
 		<%= hidden_field_tag 'id', @commande.id %>
 	</div>
 	<div class="actions">
