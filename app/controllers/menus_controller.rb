@@ -41,19 +41,31 @@ class MenusController < ApplicationController
   # POST /menus.json
   def create
     @menu = Menu.new(params[:menu])
+
+    notice = 'Menu was successfully created.'
+
+    puts "plats_attributes------" + params[:plats_attributes].to_yaml
+
+    params.each do |key, value| 
+      if key.to_s == 'description'
+        if param[key].blank?
+          notice = 'Vous avez ajouté un plat sans lui assigner une description.'
+        end
+      end
+    end
+
     restaurant_assigned = true
 
     if current_user[:clientType] == Client::CLIENT_TYPES[:restaurator] || current_user[:clientType] == Client::CLIENT_TYPES[:administrator]
       if (@menu.restaurant_id == nil)
         restaurant_assigned = false
       end
-
     end
 
     respond_to do |format|
       if (restaurant_assigned)
         if @menu.save
-          format.html { redirect_to @menu, notice: 'Menu was successfully created.' }
+          format.html { redirect_to @menu, notice: notice }
           format.json { render json: @menu, status: :created, location: @menu }
         else
           format.html { render action: "new" }
@@ -71,6 +83,14 @@ class MenusController < ApplicationController
   def update
     @menu = Menu.find(params[:id])
 
+    notice = 'Menu was successfully updated.'
+
+    puts "plats_attributes------" + params[:plats_attributes].to_yaml
+
+    if nested_hash_value(params, :description).empty
+      notice = 'Vous avez modifié un plat sans lui assigner une description.'
+    end
+
     restaurant_assigned = true
 
     if (@menu.restaurant_id == nil)
@@ -81,7 +101,7 @@ class MenusController < ApplicationController
 
       if (restaurant_assigned)
         if @menu.update_attributes(params[:menu])
-          format.html { redirect_to @menu, notice: 'Menu was successfully updated.' }
+          format.html { redirect_to @menu, notice: notice }
           format.json { head :no_content }
         else
           format.html { render action: "edit" }
@@ -104,5 +124,14 @@ class MenusController < ApplicationController
       format.html { redirect_to menus_url }
       format.json { head :no_content }
     end
+  end
+
+ def nested_hash_value(obj,key)
+  if obj.respond_to?(:key?) && obj.key?(key)
+    obj[key]
+  elsif obj.respond_to?(:each)
+    r = nil
+    obj.find{ |*a| r=nested_hash_value(a.last,key) }
+    r
   end
 end
