@@ -43,7 +43,7 @@
     <td><%= commande.deliveryTime %></td>
     <td><%= commande.deliveryAddress %></td>
 
-    <td><%= link_to 'Modifier', edit_commande_path(commande) %></td>
+    <td><%= link_to 'Details', commande %></td>
     <td><%= link_to 'Supprimer', commande, method: :delete, data: { confirm: 'Êtes-vous certain?' } %></td>
     </tr>
 <% end %>
