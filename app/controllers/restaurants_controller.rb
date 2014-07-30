@@ -41,9 +41,12 @@ class RestaurantsController < ApplicationController
   # POST /restaurants.json
   def create
     @restaurant = Restaurant.new(params[:restaurant])
+    notice = 'Restaurant was successfully created.'
 
     if (@restaurant.linkedRestaurator != '')
       @restaurant.restaurator_id = @restaurant.linkedRestaurator
+    else
+      notice = 'Vous avez ajouté un restaurant sans lui assigner un restaurateur.'
     end
 
     if (current_user.clientType == Client::CLIENT_TYPES[:entrepreneur])
@@ -53,7 +56,7 @@ class RestaurantsController < ApplicationController
     respond_to do |format|
       if @restaurant.save
 
-        format.html { redirect_to @restaurant, notice: 'Restaurant was successfully created.' }
+        format.html { redirect_to @restaurant, notice: notice }
         format.json { render json: @restaurant, status: :created, location: @restaurant }
       else
         format.html { render action: "new" }
@@ -67,18 +70,21 @@ class RestaurantsController < ApplicationController
   def update
     @restaurant = Restaurant.find(params[:id])
     temp_restaurant = Restaurant.new(params[:restaurant])
+    notice = 'Restaurant was successfully updated.'
 
     if (temp_restaurant.linkedRestaurator != '')
       @restaurant.restaurator_id = temp_restaurant.linkedRestaurator
+    else
+      notice = 'Vous avez modifié un restaurant sans lui assigner un restaurateur.'
     end
 
-    if (temp_restaurant.linkedEntrepreneur != '')
-      @restaurant.entrepreneur_id = temp_restaurant.linkedEntrepreneur
+    if (current_user.clientType == Client::CLIENT_TYPES[:entrepreneur])
+      @restaurant.entrepreneur_id = current_user.id
     end
 
     respond_to do |format|
       if @restaurant.update_attributes(params[:restaurant])
-        format.html { redirect_to @restaurant, notice: 'Restaurant was successfully updated.' }
+        format.html { redirect_to @restaurant, notice: notice }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

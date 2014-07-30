@@ -44,10 +44,14 @@ class RestauratorsController < ApplicationController
     @restaurator.setAsRestaurator
 
     @restaurant_ids = params[:checkedRestaurants]
-    @restaurator.linkedRestaurant = 0
+    restaurants_id_count = 0
+
+    notice = 'Restaurator was successfully created.'
 
     if (!@restaurant_ids.nil?)
       @restaurator.linkedRestaurant = @restaurant_ids.count
+    else
+      notice = 'Vous avez ajouté un restaurateur dans lui assigner un restaurant.'
     end
 
     #nombre de restaurants liés au restaurateur
@@ -68,7 +72,7 @@ class RestauratorsController < ApplicationController
           end
         end
 
-        format.html { redirect_to @restaurator, notice: 'Restaurator was successfully created.' }
+        format.html { redirect_to @restaurator, notice: notice }
         format.json { render json: @restaurator, status: :created, location: @restaurator }
       else
         format.html { render action: "new" }
@@ -91,6 +95,8 @@ class RestauratorsController < ApplicationController
     respond_to do |format|
       if @restaurator.update_attributes(params[:restaurator])
 
+        notice = 'Restaurator was successfully updated.'
+
         if (!@restaurant_ids.nil?)
 
           #désassignation de tout les restaurants qui sont assigné a ce restaurateur (clean start)
@@ -110,9 +116,11 @@ class RestauratorsController < ApplicationController
             end
           end
 
+        else
+          notice = 'Vous avez modifié un restaurateur dans lui assigner un restaurant.'
         end
 
-        format.html { redirect_to @restaurator, notice: 'Restaurator was successfully updated.' }
+        format.html { redirect_to @restaurator, notice: notice }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
