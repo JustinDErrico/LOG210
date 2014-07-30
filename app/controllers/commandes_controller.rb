@@ -124,6 +124,9 @@ class CommandesController < ApplicationController
     respond_to do |format|
       dateformat = "%d/%m/%Y %H:%M"
       if @commande.update_attributes(:deliveryTime => DateTime.strptime(params[:deliveryTime], dateformat), :deliveryAddress => finalAddress)
+
+        UserMailer.registration_confirmation(Client.find(current_user.id)).deliver
+
         format.html { redirect_to @commande, notice: 'Commande was successfully updated. Numero de confirmation: '+ no_confirmation}
         format.json { head :no_content }
       end
