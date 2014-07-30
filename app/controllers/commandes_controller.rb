@@ -52,7 +52,6 @@ class CommandesController < ApplicationController
         @produit = Produit.new(commande_id: @commande.id, plat_id: p[1][:plat_id], quantity: p[1][:quantity])
 
         if !@produit.save
-          puts "produit--------" + @produit.to_yaml
           valid = false
         end
       end
@@ -60,9 +59,9 @@ class CommandesController < ApplicationController
 
     respond_to do |format|
       if valid
-        format.html { redirect_to @commande, notice: 'Commande was successfully added.' }
+        format.html { render 'commandes/confirmation', notice: 'Commande was successfully added.' }
       else
-        format.html { render action: "new", notice: 'Erreur' }
+        format.html { render action: "new", notice: 'Erreur dans la commande' }
       end
     end
   end
@@ -98,6 +97,18 @@ class CommandesController < ApplicationController
   def get_menus
     respond_to do |format|
       format.js { render :partial => 'commandes/passer_commande', :locals => { :restaurant_id => params[:id] } }
+    end
+  end
+
+  def confirmer
+    @commande = Commande.find(params[:id])
+    no_confirmation = Digest::SHA1.hexdigest([Time.now, rand].join)
+
+    respond_to do |format|
+      if @commande.update_attributes(:deliveryTime => params[:deliveryTime], :deliveryAddress => params[:deliveryAddress])
+        format.html { redirect_to @commande, notice: 'Commande was successfully updated. Numéro de confirmation: '+ no_confirmation}
+        format.json { head :no_content }
+      end
     end
   end
 end

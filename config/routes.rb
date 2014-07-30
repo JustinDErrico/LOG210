@@ -1,12 +1,9 @@
 LOG210::Application.routes.draw do
   resources :produits
 
-  resources :commandes do
-    collection do
-      get :choisir_produits
-      get :save_commande
-    end
-  end
+  resources :commandes
+  get '/get_menus' => 'commandes#get_menus'
+  post '/commandes/confirmer' => 'commandes#confirmer'
 
   resources :menus
 
@@ -21,7 +18,7 @@ LOG210::Application.routes.draw do
 
   resources :restaurants
   get "restaurants/index"
-  get '/get_menus' => 'commandes#get_menus'
+  
 
   resources :restaurators
   get "restaurators/index"

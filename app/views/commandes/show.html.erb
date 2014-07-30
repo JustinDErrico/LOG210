@@ -1,18 +1,20 @@
 <%
   @produits = Produit.find(:all, :conditions => { :commande_id => @commande.id })
 %>
-<p id="notice"><%= notice %></p>
-
 <p>
-	<b>Client:</b>
-	<%= @commande.client_id %>
 	<ul>
+		<li><strong>Restaurant:</strong> <%= Restaurant.find(@commande.restaurant_id).name %></li>
+		<li><strong>Date de livraison:</strong> <%= @commande.deliveryTime %></li>
+		<li><strong>Adresse de livraison:</strong> <%= @commande.deliveryAddress %></li>
+		<li><strong>Produits</strong></li>
+		<ul>
   		<% @produits.each do |produit| %>
   			<li>
 				<% @plat = Plat.find(produit.plat_id) %>
 				<span><%= @plat.nom %> (<%= @plat.prix %>) x <%= produit.quantity %></span>
 			</li>
 		<% end %>
+		</ul>
 	</ul>
 </p>
 

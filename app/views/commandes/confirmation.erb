@@ -1,0 +1,31 @@
+<% @produits = Produit.find(:all, :conditions => { :commande_id => @commande.id }) %>
+<p>
+	<b>Client:</b>
+	<%= @commande.client_id %>
+	<ul>
+  		<% @produits.each do |produit| %>
+  			<li>
+				<% @plat = Plat.find(produit.plat_id) %>
+				<span><%= @plat.nom %> (<%= @plat.prix %>) x <%= produit.quantity %></span>
+			</li>
+		<% end %>
+	</ul>
+</p>
+<p>
+<%= form_tag('/commandes/confirmer', method: 'post') do %>	
+	<div class="fields">
+        <div class="field">
+			<%= label_tag 'deliveryTime', 'Date de livraison' %><br />
+			<%= text_field_tag 'deliveryTime' %>
+		</div>
+		<div class="field">
+			<%= label_tag 'deliveryAddress', 'Adresse de livraison' %><br />
+			<%= text_field_tag 'deliveryAddress' %>
+		</div>
+		<%= hidden_field_tag 'id', @commande.id %>
+	</div>
+	<div class="actions">
+		<%= submit_tag 'Confirmer la commande', class: "btn btn-primary" %>
+  	</div>
+<% end %>
+</p>
