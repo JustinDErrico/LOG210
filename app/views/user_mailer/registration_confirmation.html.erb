@@ -8,27 +8,47 @@
   </style>
 </head>
 <body>
+<% if @commande_id != nil %>
+<% @commande = Commande.find(@commande_id)
+   @produits = Produit.find_all_by_commande_id(@commande_id)
+   prix = 0
+%>
 <table border="1">
   <tr>
     <td colspan="2" style="text-align: center; font-size:18px">Voici les détails de votre commande :</td>
   </tr>
   <tr>
     <td ><b>Restaurant</b></td>
-    <td >Mcdonald's</td>
+    <td ><%= Restaurant.find(@commande.restaurant_id).name %></td>
   </tr>
   <tr>
-    <td><b>Contenu de la commande : </b></td>
-    <td >4 McCroquettes</td>
+    <td ><b>Date de livraison</b></td>
+    <td ><%= @commande.deliveryTime %></td>
   </tr>
   <tr>
-    <td><b>Livré le : </b></td>
-    <td>demain matin</td>
+    <td ><b>Adresse de livraison</b></td>
+    <td ><%= @commande.deliveryAddress %></td>
   </tr>
+
+  <tr>
+    <td colspan="2" style="text-align: center; font-size:18px">Contenu de la commande : </td>
+  </tr>
+  <% @produits.each do |produit| %>
+      <tr>
+        <td><b> <%= Plat.find(produit.plat_id).nom %> (<%=sprintf('%.2f',Plat.find(produit.plat_id).prix)%>$) </b></td>
+        <td ><%= produit.quantity %></td>
+      </tr>
+      <% prix = prix + (Plat.find(produit.plat_id).prix * produit.quantity) %>
+  <% end %>
   <tr>
     <td><b>Total : </b></td>
-    <td>200$</td>
+    <td><%=  sprintf('%.2f',prix) %>$</td>
   </tr>
 </table>
-<p>Merci de faire confiance à MexicanExpress Delivery! </p>
+    <p>Merci de faire confiance à MexicanExpress Delivery! </p>
+<% else %>
+    <p>Une erreur est survenue. </p>
+<% end %>
+
 </body>
 </html>

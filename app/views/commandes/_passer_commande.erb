@@ -14,7 +14,7 @@
     <div class="panel-body">
       <% @plats = Plat.find(:all, :conditions => { :menu_id => m.id }) %>
       <% @plats.each do |p| %>
-        <span><%= p.nom %> (<%= p.prix %>$)</span>
+        <span><%= p.nom %> (<%= sprintf('%.2f',p.prix) %>$)</span>
           <div class="fields">
             <div class="field">
               <% produit = Produit.new %>

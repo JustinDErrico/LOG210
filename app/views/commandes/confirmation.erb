@@ -15,7 +15,7 @@
   		<% @produits.each do |produit| %>
   			<li>
 				<% @plat = Plat.find(produit.plat_id) %>
-				<span><%= @plat.nom %> (<%= @plat.prix %>) x <%= produit.quantity %></span>
+				<span><%= @plat.nom %> (<%= sprintf('%.2f',@plat.prix) %>$) x <%= produit.quantity %></span>
 			</li>
 		<% end %>
 		</ul>
