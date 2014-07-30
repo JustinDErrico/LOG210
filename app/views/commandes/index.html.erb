@@ -38,7 +38,7 @@
       <td><%= Client.find(commande.client_id).emailAddress %></td>
     <% end %>
     <td><%= Restaurant.find(commande.restaurant_id).name if commande.restaurant_id != nil %></td>
-    <td><%= produits.count %></td>
+    <td><%= produits.count if produits != nil %></td>
     <td><%= totalPrice %></td>
     <td><%= commande.deliveryTime %></td>
     <td><%= commande.deliveryAddress %></td>

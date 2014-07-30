@@ -87,9 +87,9 @@ class MenusController < ApplicationController
 
     puts "plats_attributes------" + params[:plats_attributes].to_yaml
 
-    if nested_hash_value(params, :description).empty
-      notice = 'Vous avez modifié un plat sans lui assigner une description.'
-    end
+    # if nested_hash_value(params, :description).empty
+    #   notice = 'Vous avez modifié un plat sans lui assigner une description.'
+    # end
 
     restaurant_assigned = true
 
