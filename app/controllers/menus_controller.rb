@@ -56,11 +56,11 @@ class MenusController < ApplicationController
 
     restaurant_assigned = true
 
-    if current_user[:clientType] == Client::CLIENT_TYPES[:restaurator] || current_user[:clientType] == Client::CLIENT_TYPES[:administrator]
-      if (@menu.restaurant_id == nil)
-        restaurant_assigned = false
-      end
-    end
+    # if current_user[:clientType] == Client::CLIENT_TYPES[:restaurator] || current_user[:clientType] == Client::CLIENT_TYPES[:administrator]
+    #   if (@menu.restaurant_id == nil)
+    #     restaurant_assigned = false
+    #   end
+    # end
 
     respond_to do |format|
       if (restaurant_assigned)
@@ -85,11 +85,20 @@ class MenusController < ApplicationController
 
     notice = 'Menu was successfully updated.'
 
-    puts "plats_attributes------" + params[:plats_attributes].to_yaml
+    puts "params" + params.to_yaml
 
     # if nested_hash_value(params, :description).empty
     #   notice = 'Vous avez modifié un plat sans lui assigner une description.'
     # end
+
+    params[:menu][:plats_attributes].each do |key, value|
+      value.each do |s_key, s_value|
+        if s_key.to_s == 'description' && s_value.to_s == ''
+          notice = 'Vous avez modifié un plat sans lui assigner une description.'
+          puts "val" + s_value.to_yaml
+        end
+      end
+    end
 
     restaurant_assigned = true
 
