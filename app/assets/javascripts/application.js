@@ -53,11 +53,11 @@ function get_menu()
 
         if(response.responseText.trim())
         {
-          $('input[type=submit]').show();
+          $('button[type=submit]').show();
         }
         else
         {
-          $('input[type=submit]').hide();
+          $('button[type=submit]').hide();
         }
       }
     });
